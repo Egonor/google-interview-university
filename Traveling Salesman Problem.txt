@@ -1,0 +1,40 @@
+Algorithm - A procedure that takes a number(n) inputs and *always* returns a desired output(s).  
+			To be defined as an algorithm is must ALWAYS BE CORRECT.
+
+Greedy Algorithm - An algorithm that attempts to always select the best solution.
+
+NP Complete Problem - A problem for which there is no best solution. (In correctness vs. effeciency)
+
+*Good algorithm design is about learning to look for counterexamples. 
+	Also, suppose the algorithm is wrong an look for a counterexample where it isn't successful
+
+
+Traveling Salesman (NP Complete)
+
+Shortest route
+
+* Exhaustive Search (Too slow but correct, like ((n-1)!/2))
+	- Try all possible routes
+	- Don't need to repeat nodes in the list
+	- Don't need to check paths backwards and forwards
+
+* Nearest Neighbor (Never correct, but fast - like points in a line)
+	Pick and visit an initial point p0
+	p = p_0
+	i = 0
+	While there are still unvisited points
+		i = i + 1
+		Let p_i be the closest unvisited point to p_i-1
+		Visit p_i
+	Return to p_0 from p_i
+
+	- Find a starting point then move to the nearest point
+	- Continue 
+
+
+
+Movie Star Scheduling Problem
+Input: A set I of n intervals on a line.
+Output: What is the largest subset of mutually non-overlapping intervals which can be selected from I?
+
+

@@ -1,0 +1,34 @@
+Knapsack Problem - Exhaustive Search is most correct.
+
+********************************************************************************************************
+The *knapsack problem* is as follows: given a set of integers S = {s1, s2, ..., sn}, 
+and a given target number T, find a subset of S which adds up exactly to T.
+For example, within S = {1, 2, 5, 9, 10} there is a subset which adds up to T = 22 but not T = 23.
+
+Find counterexamples to each of the following algorithms for the knapsack problem.
+That is, give an S and T such that the subset is selected using the algorithm does not leave the knapsack
+completely full, even though there exists a solution.
+********************************************************************************************************
+
+A thief breaks into a store and has a knapsack that he can fit things into.
+The knapsack can only carry a certain number of items without breaking them.
+
+
+1) Put the elements of S in the knapsack in left ot right order if the fit, i.e. the first-fit algoritm?
+
+Look for counter-examples, the simplest counterexamples are best.
+
+
+
+
+Some function/algorithm is going to be squiggly and weird in reality so we use Big O Notation to "bound"
+the function
+
+
+Big O - O(f(n)) An upper bound on some function.
+
+Omega(f(n)) - A lower bound on some function
+
+Theta(f(n)) - There is an Upper Bound and a Lower Bound on the function, and it is TIGHT.
+
+
