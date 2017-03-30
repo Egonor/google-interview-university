@@ -32,3 +32,48 @@ Omega(f(n)) - A lower bound on some function
 Theta(f(n)) - There is an Upper Bound and a Lower Bound on the function, and it is TIGHT.
 
 
+A function without loops is 		O(1) 	because the number of instructions is constant.
+A function with a one loop is 		O(n) 	because there is a constant number of instructions before the loop, after the the loop, and within the loop (*which will run n times)
+A function with nested loops is 	O(n^2) 	and so on, a loop within a loop within a loop would be O(n^3)
+
+
+
+
+
+
+
+
+
+
+
+___1___
+1) n^6
+2) 2^n
+3) 3^n
+4) n^n
+___2___
+f(n) = 3n + 3
+3n : $i < n, ++$i, if
++3 : $exists = false, $i = 0, ($i < n)? 
+___3___
+1. True
+2. True
+3. True
+4. False
+5. True
+6. True?
+___4___
+n(n-1)/2
+___5___
+1. tight
+2. wrong
+3. tight
+4. wrong
+5. o(2n)
+___7___	*base 2
+1) log(64) = 2^6
+2) log(8) = 2^3
+3) log(2) = 2^1
+4) log(1) = 2^0
+5) log(16) = 2^4 + 2^4				2^4 + 2^4 = 32 
+6) log(8) = 2^3 + 2^3				2^3 * 2^3 = 64
