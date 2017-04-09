@@ -3,15 +3,62 @@
 
 #include "stdafx.h"
 #include "vector.h"
+#include "linkedlist.h"
 
-// Mutable Arrays (ArrayLists) in C
 // To DEBUG use "storage, 10" (to display 10 array values) "<arrayname>, <#num values>"
 
 
 int main()
-{	
-	Vector v;
+{
+	LinkedList l;
 
+
+	// TEST isEmpty()
+	printf(l.isEmpty() ? "Empty: True\n" : "Empty: False\n");
+	printf("Size(): %d\n", l.Size());
+
+	// TEST PushFront()
+	l.PushFront(6);
+	l.PushFront(5);
+	l.PushFront(4);
+	l.PushFront(3);
+	l.PushFront(2);
+	l.PushFront(1);
+
+	// Test Access()
+	printf("Item 1: %d\n", l.Access(0));
+	printf("Item 2: %d\n", l.Access(1));
+	printf("Item 3: %d\n", l.Access(2));
+	printf("Item 4: %d\n", l.Access(3));
+	printf("Item 5: %d\n", l.Access(4));
+	printf("Item 6: %d\n", l.Access(5));
+
+	// TEST Front()
+	printf("Front(): %d\n", l.Front());
+	// TEST Back()
+	printf("Back(): %d\n", l.Back());
+
+	// TEST isEmpty() (After filling)
+	printf("Empty(): %s", l.isEmpty() ? "True\n" : "False\n");
+	// TEST Size()
+	printf("Size(): %d\n", l.Size());
+
+
+
+
+	/* TEST isEmpty() 
+	printf(l.isEmpty() ? "true\n" : "false\n");
+	l.PushFront(12);
+	printf(l.isEmpty() ? "true\n" : "false\n");
+
+	// TEST Size()
+	printf("Size: %d\n", l.Size());
+	*/
+	
+
+#pragma region Vector Tests
+	/*
+	Vector v;
 	
 	v.Push(1);
 	v.Push(2);
@@ -82,9 +129,11 @@ int main()
 	v.Push(32);
 	printf(v.isEmpty() ? "true\n" : "false\n");
 	*/
-
-	printf(NULL);
+	
+#pragma endregion
 	
 
+	l.~LinkedList();
+	printf(NULL);
 }
 
