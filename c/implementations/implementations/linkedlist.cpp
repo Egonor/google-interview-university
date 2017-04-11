@@ -13,7 +13,8 @@ Node::Node(int val) {
 */
 
 Node* create(int item, Node* next) {
-	Node* new_node = (Node*)malloc(sizeof(Node));
+	Node* new_node = new Node();
+	//Node* new_node = (Node*)malloc(sizeof(Node));
 	if (new_node == NULL) {
 		printf("Error creating new node.\n");
 		exit(0);
@@ -24,20 +25,15 @@ Node* create(int item, Node* next) {
 }
 
 LinkedList::LinkedList() {
-	head = create(NULL, NULL);
+	head = NULL;
 	size = 0;
 }
 
 LinkedList::LinkedList(int item) {
+	//head = new Node();
+	//head->item = item;
 	head = create(item, NULL);
-	size++;
-}
-
-LinkedList::~LinkedList() {
-	Node* cursor = head;
-	while (cursor != 0) {
-
-	}
+	size = 1;
 }
 
 
@@ -55,9 +51,8 @@ bool LinkedList::isEmpty() {
 // Returns the item at indexth node
 int LinkedList::Access(int index) {
 	// TODO
-	if (index > size || index < 0) {
-		printf("Attempted to access outside of Linked List.");
-		exit(0);
+	if (index < 0 || index > (size - 1)) {
+		throw std::out_of_range("Tried to Access() invalid index.");
 	}
 	else {
 		int count = 0;
@@ -71,45 +66,96 @@ int LinkedList::Access(int index) {
 }
 
 int LinkedList::Front() {
-	return head->item;
+	if (!isEmpty())
+		return head->item;
+	else
+		throw std::out_of_range("Attempted to Access() empty list.");
 }
+
 int LinkedList::Back() {
-	// TODO: Test - no idea if any of this pointer syntax is correct.
-	//			Use size to get to back... for i < size?
-	return Access(size - 1);
+	if (!isEmpty())
+		return Access(size - 1);
+	else
+		throw std::out_of_range("Attempted to Access() empty list.");
 	/*
-	Node *cursor = head;
-	while (cursor != NULL) {
+	Node * cursor = head;
+	while (cursor->next != NULL) {
 		cursor = cursor->next;
 	}
-	return cursor->item;
+	return cursor->item;	
 	*/
 }
+
 int LinkedList::AccessFromEnd(int n) {
 	// TODO: Implement
-	return NULL;
+	if (n > 0 && n < size)
+		return Access(size - 1 - n);
+	else
+		throw std::out_of_range(
+			"AccessFromEnd(int n), n must be a positive integer, less than sizeof(List)");
 }
 
 void LinkedList::PushFront(int value) {
 	head = create(value, head);
 	size++;
 }
+
 void LinkedList::PushBack(int value) {
-
+	// TODO: Less hacky solution?
+	if (isEmpty())
+		head = create(value, NULL);
+	else {
+		Node * cursor = head;
+		while (cursor->next != NULL) {
+			cursor = cursor->next;
+		}
+		cursor->next = create(value, NULL);
+	}
+	size++;
 }
-void LinkedList::Insert(int index, int value) {
-	//newNext = Node(item, oldNext);
 
+void LinkedList::Insert(int index, int value) {
+	if (index <= 0 || index >= size) {
+		throw std::out_of_range("Attempted to Insert() outside of list range.");
+	}
+	else {
+		Node* cursor = head;
+		int i = 0;
+		while (i < index) {
+			printf("Cursor at %p...\n", cursor);
+			cursor = cursor->next;
+			i++;
+		}
+
+		Node* temp = create(value, cursor->next);
+		cursor->next = temp;
+		size++;
+	}
 }
 
 void LinkedList::PopFront() {
 	// TODO: Test for memory leak?
-	Node* temp = head;
-	//delete head;
-	head = temp->next;
-	
+	Node* temp = head->next;
+	free(head);
+	head = temp;
+	size--;	
 }
+
 void LinkedList::PopBack() {
+	if (size <= 0) {
+		throw std::out_of_range("Nothing to Pop().");
+	}
+
+	Node *cursor = head;
+	int i = 0;
+	while (i < (size - 2)) {
+		cursor = cursor->next;
+		i++;
+	}
+	Node * temp = cursor;
+	cursor->next = NULL;
+	delete temp;
+	size--;
 	
 }
 void LinkedList::RemoveValue(int value) {
@@ -121,4 +167,29 @@ void LinkedList::Erase(int index) {
 
 void LinkedList::Reverse(int value) {
 
+}
+
+//	PrintList(LinkedList) calls this destructor but it destroys the list...
+LinkedList::~LinkedList() {
+	//	Mine
+	Node* cursor = head;
+	while (cursor->next != NULL) {
+		head = head->next;
+		free(cursor);
+		cursor = head;
+	}
+	free(head);
+	
+
+	/*	StackOverflow's
+	Node *current = head;
+	while (current != 0) {
+		Node *next = current->next;
+		delete current;
+		current = next;
+	}
+	head = 0;
+	*/
+
+	size = 0;	
 }

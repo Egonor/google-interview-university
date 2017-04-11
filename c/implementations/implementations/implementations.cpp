@@ -5,7 +5,21 @@
 #include "vector.h"
 #include "linkedlist.h"
 
-// To DEBUG use "storage, 10" (to display 10 array values) "<arrayname>, <#num values>"
+// To WATCH use "storage, 10" (to display 10 array values){ <arrayname>, <#num values>
+
+// Takes a pointer to a linked list because it calls
+// destructor if given an actual list...
+// Why it doesn't give it a copy, I don't understand...
+// TODO: Look up Copy Constructor = may need to define copy's behavior for pass by value.
+// https://stackoverflow.com/questions/21215409/does-c-pass-objects-by-value-or-reference
+void PrintList(LinkedList *l) {
+	printf("------------------------\n");
+	for (int i = 0; i < l->Size(); i++) {
+		printf("%d, ", l->Access(i));
+	}
+	printf("\n");
+	printf("------------------------\n");
+}
 
 
 int main()
@@ -17,33 +31,58 @@ int main()
 	printf(l.isEmpty() ? "Empty: True\n" : "Empty: False\n");
 	printf("Size(): %d\n", l.Size());
 
-	// TEST PushFront()
+	/* TEST PushFront()	
 	l.PushFront(6);
 	l.PushFront(5);
 	l.PushFront(4);
 	l.PushFront(3);
 	l.PushFront(2);
 	l.PushFront(1);
+	printf("PushFront(0): %d\n", l.Front());
+	*/
+	
+	/* TEST PushBack() & Insert
+	l.PushBack(1);
+	l.PushBack(2);
+	l.PushBack(3);
+	l.Insert(1, 3);
+	printf("%d %d %d %d\n", l.Access(0), l.Access(1), l.Access(2), l.Access(3));
+	*/
 
-	// Test Access()
-	printf("Item 1: %d\n", l.Access(0));
-	printf("Item 2: %d\n", l.Access(1));
-	printf("Item 3: %d\n", l.Access(2));
-	printf("Item 4: %d\n", l.Access(3));
-	printf("Item 5: %d\n", l.Access(4));
-	printf("Item 6: %d\n", l.Access(5));
 
+	// TODO: Fix this shit, brain fried atm...
+	// TEST PopFront()
+	LinkedList front;
+	for (int i = 1; i < 5; i++) {
+		front.PushBack(i);
+	}
+	PrintList(&front);
+	int toPopFront = front.Size() - 1;
+	for (int i = 1; i < toPopFront; i++) {
+		front.PopBack();
+	}
+	PrintList(&front);
+
+	// TEST PopBack()
+	LinkedList back;
+	for (int i = 1; i < 5; i++) {
+		back.PushBack(i);
+	}
+	PrintList(&back);
+	int toPopBack = back.Size() - 1;
+	for (int i = 1; i < toPopBack; i++) {
+		back.PopBack();
+	}
+	PrintList(&back);
+
+	/*
 	// TEST Front()
 	printf("Front(): %d\n", l.Front());
 	// TEST Back()
 	printf("Back(): %d\n", l.Back());
-
-	// TEST isEmpty() (After filling)
-	printf("Empty(): %s", l.isEmpty() ? "True\n" : "False\n");
-	// TEST Size()
-	printf("Size(): %d\n", l.Size());
-
-
+	// Test AccessFromEnd()
+	printf("AccEnd(3): %d\n", l.AccessFromEnd(3));
+	*/
 
 
 	/* TEST isEmpty() 
@@ -134,6 +173,6 @@ int main()
 	
 
 	l.~LinkedList();
-	printf(NULL);
+	printf(0);
 }
 
