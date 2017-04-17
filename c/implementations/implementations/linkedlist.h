@@ -42,9 +42,9 @@ public:
 	void PopFront();						// remove item from Front (memory leaks?)
 	void PopBack();							// remove item from Back ("")
 	void RemoveValue(int value);			// remove FIRST item with == Value
-	void Erase(int index);					// remove ALL items with Value
+	void Erase(int value);					// remove ALL items with Value
 
-	void Reverse(int value);				// reverse the list
+	void Reverse();				// reverse the list
 
 	//void InsertAfter(int newItem);
 
