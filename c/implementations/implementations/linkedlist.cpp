@@ -1,24 +1,16 @@
 #include "stdafx.h"
 #include "linkedlist.h"
 
-/*
-Node::Node(int item, Node n) {
-	item = item;
-	next = n.next;
-}
-
-Node::Node(int val) {
-	item = val;
-}
-*/
 
 Node* create(int item, Node* next) {
 	Node* new_node = new Node();
-	//Node* new_node = (Node*)malloc(sizeof(Node));
+	/* Malloc Version
+	Node* new_node = (Node*)malloc(sizeof(Node));
 	if (new_node == NULL) {
 		printf("Error creating new node.\n");
 		exit(0);
 	}
+	*/
 	new_node->item = item;
 	new_node->next = next;
 	return new_node;
@@ -26,6 +18,7 @@ Node* create(int item, Node* next) {
 
 LinkedList::LinkedList() {
 	head = NULL;
+	tail = head;
 	size = 0;
 }
 
@@ -33,6 +26,7 @@ LinkedList::LinkedList(int item) {
 	//head = new Node();
 	//head->item = item;
 	head = create(item, NULL);
+	tail = head;
 	size = 1;
 }
 
@@ -48,11 +42,21 @@ bool LinkedList::isEmpty() {
 }
 
 int LinkedList::Access(int index) {
-	// TODO
+	// TODO: Test Tail case and rewritten for loop.
 	if (index < 0 || index > (size - 1)) {
 		throw std::out_of_range("Tried to Access() invalid index.");
 	}
+	// Accessing the end is O(1) with a tail pointer.
+	else if (index == (size - 1)) {
+		return tail->item;
+	}
 	else {
+		Node *curr = head;
+		for (int i = 0; i < index; i++) {
+			curr = curr->next;
+		}
+		return curr->item;
+		/* THIS WORKS BUT I REWROTE AS A FOR LOOP
 		int count = 0;
 		Node* current = head;
 		while (count != index) {
@@ -60,19 +64,22 @@ int LinkedList::Access(int index) {
 			count++;
 		}
 		return current->item;
+		*/
 	}
 }
 
 int LinkedList::Front() {
-	if (!isEmpty())
+	if ( !isEmpty() )
 		return head->item;
 	else
 		throw std::out_of_range("Attempted to Access() empty list.");
 }
 
 int LinkedList::Back() {
+	// O(1) with tail pointer.
 	if (!isEmpty())
-		return Access(size - 1);
+		return tail->item;
+		//return Access(size - 1);
 	else
 		throw std::out_of_range("Attempted to Access() empty list.");
 	/*
@@ -85,7 +92,6 @@ int LinkedList::Back() {
 }
 
 int LinkedList::AccessFromEnd(int n) {
-	// TODO: Implement
 	if (n > 0 && n < size)
 		return Access(size - 1 - n);
 	else
@@ -99,9 +105,22 @@ void LinkedList::PushFront(int value) {
 }
 
 void LinkedList::PushBack(int value) {
-	// TODO: Less hacky solution?
-	if (isEmpty())
+	// TODO: Check if this works
+	// O(1) with tail pointer
+	if (isEmpty()) {
 		head = create(value, NULL);
+		tail = head;
+	}
+	else {
+		tail->next = create(value, NULL);
+		tail = tail->next;
+	}
+
+	// Tail = less hacky solution?
+	/* pre *tail pointer
+	if (isEmpty()) {
+		head = create(value, NULL);
+	}
 	else {
 		Node * current = head;
 		while (current->next != NULL) {
@@ -109,6 +128,7 @@ void LinkedList::PushBack(int value) {
 		}
 		current->next = create(value, NULL);
 	}
+	*/
 	size++;
 }
 
@@ -116,11 +136,15 @@ void LinkedList::Insert(int index, int value) {
 	if (index <= 0 || index >= size) {
 		throw std::out_of_range("Attempted to Insert() outside of list range.");
 	}
+	else if (index == (size - 1)) {
+		tail->next = create(value, NULL);
+		tail = tail->next;
+		size++;
+	}
 	else {
 		Node* current = head;
 		int i = 0;
 		while (i < index) {
-			printf("current at %p...\n", current);
 			current = current->next;
 			i++;
 		}
@@ -134,16 +158,36 @@ void LinkedList::Insert(int index, int value) {
 void LinkedList::PopFront() {
 	// TODO: Test for memory leak?
 	Node* temp = head->next;
-	free(head);
+	delete head;
 	head = temp;
 	size--;	
 }
 
 void LinkedList::PopBack() {
+	// tail pointer doesn't decrease this operation's time in a
+	// singly-linked list because we still have to change the tail pointer
 	if (size <= 0) {
 		throw std::out_of_range("Nothing to Pop().");
 	}
+	else {
+		Node *cursor = head;
+		while (cursor->next != tail) {
+			cursor = cursor->next;
+		}
 
+		delete tail;
+		tail = NULL;  // Unnecessary?
+		tail = cursor;
+		tail->next = NULL;
+		size--;
+
+		/*
+		for (int i = 0; i < size - 1; i++) {
+			cursor = cursor->next;
+		} */
+
+	}
+	/* pre *tail pointer
 	Node *current = head;
 	int i = 0;
 	while (i < (size - 2)) {
@@ -154,13 +198,14 @@ void LinkedList::PopBack() {
 	current->next = NULL;
 	delete temp;
 	size--;
+	*/
 	
 }
 
 void LinkedList::RemoveValue(int value) {
 	// For reference: https://www.cs.bu.edu/teaching/c/linked-list/delete/
-	printf("Attempting to RemoveValue(%d)...\n", value);
-	
+	//printf("Attempting to RemoveValue(%d)...\n", value);
+
 	Node *current = head;
 	Node *previous = NULL;
 	while (current->item != value && current->next != NULL) 
@@ -168,19 +213,21 @@ void LinkedList::RemoveValue(int value) {
 		previous = current;
 		current = current->next;
 	}
-
 	if (current->item == value) {
 		if (previous == NULL)
 			head = current->next;
+		// TODO: Account for tail in case of removing single item from list
 		else {
+			if (current == tail)
+				tail = previous;
 			previous->next = current->next;
 		}
-
-		free(current);
+		delete current;
 		size--;
 	}
 	else
-		printf("%d not found, cannot remove!\n", value);
+		throw std::runtime_error("Value not found in list, cannot remove!");
+		//printf("%d not found, cannot remove!\n", value);
 }
 
 void LinkedList::Erase(int value) {
@@ -241,8 +288,7 @@ LinkedList::~LinkedList() {
 		free(current);
 		current = head;
 	}
-	free(head);
-	
+	free(head);	
 
 	/*	StackOverflow's
 	Node *current = head;
