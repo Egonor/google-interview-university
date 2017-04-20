@@ -22,6 +22,27 @@ public:
 	bool isEmpty();				// return true if queue is empty
 
 	void Enqueue(int value);	// Add value @ tail position
-	int Dequeue();				// Remove and return last added value
+	int Dequeue();				// Remove and return last added value	
+};
+
+class ArrayQueue {
+private:
+	const static int bufferSize = 4;	// Uses to set initial buffer size
+	int buffer[bufferSize];				// (changing size isn't implemented)
+	int size;
+	int readCursor = 0;
+	int writeCursor = 0;
+
+public:
+
+	ArrayQueue();
+	ArrayQueue(int value);
+	//~ArrayQueue();
+
+	int Size();
+	bool isEmpty();
+	bool isFull();
 	
+	void Enqueue(int value);
+	int Dequeue();
 };
