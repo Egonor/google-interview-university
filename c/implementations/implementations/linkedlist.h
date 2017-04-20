@@ -24,8 +24,8 @@ private:
 
 public:
 	LinkedList();
-	//LinkedList(int item, Node *next);
 	LinkedList(int item);
+	//LinkedList(int item, Node *next);
 	~LinkedList();
 
 	int Size();								// return number of data elements in list

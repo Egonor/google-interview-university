@@ -42,11 +42,10 @@ bool LinkedList::isEmpty() {
 }
 
 int LinkedList::Access(int index) {
-	// TODO: Test Tail case and rewritten for loop.
 	if (index < 0 || index > (size - 1)) {
 		throw std::out_of_range("Tried to Access() invalid index.");
 	}
-	// Accessing the end is O(1) with a tail pointer.
+	// TAIL: Access()ing the end is O(1) with a tail pointer.
 	else if (index == (size - 1)) {
 		return tail->item;
 	}
@@ -100,13 +99,19 @@ int LinkedList::AccessFromEnd(int n) {
 }
 
 void LinkedList::PushFront(int value) {
-	head = create(value, head);
+	// TAIL: PushFront() must adjust tail in single-item list
+	//			w/o tail pointer, only need the else condition.
+	if (head == NULL) {
+		head = create(value, head);
+		tail = head;
+	}
+	else
+		head = create(value, head);
 	size++;
 }
 
 void LinkedList::PushBack(int value) {
-	// TODO: Check if this works
-	// O(1) with tail pointer
+	// TAIL: PushBack() is O(1) with tail pointer
 	if (isEmpty()) {
 		head = create(value, NULL);
 		tail = head;
@@ -116,8 +121,7 @@ void LinkedList::PushBack(int value) {
 		tail = tail->next;
 	}
 
-	// Tail = less hacky solution?
-	/* pre *tail pointer
+	/* TAIL: PushBack() code pre-tail pointer
 	if (isEmpty()) {
 		head = create(value, NULL);
 	}
@@ -127,8 +131,7 @@ void LinkedList::PushBack(int value) {
 			current = current->next;
 		}
 		current->next = create(value, NULL);
-	}
-	*/
+	} */
 	size++;
 }
 
@@ -156,16 +159,18 @@ void LinkedList::Insert(int index, int value) {
 }
 
 void LinkedList::PopFront() {
-	// TODO: Test for memory leak?
 	Node* temp = head->next;
 	delete head;
 	head = temp;
+	// TAIL: PopFront() adjust tail for single item list.
+	if (head == NULL)
+		tail = head;
 	size--;	
 }
 
 void LinkedList::PopBack() {
-	// tail pointer doesn't decrease this operation's time in a
-	// singly-linked list because we still have to change the tail pointer
+	// TAIL: PopBack() time doesn't decrease w/ a tail pointer
+	//			in a singly-linked list because we still need to adjust it.
 	if (size <= 0) {
 		throw std::out_of_range("Nothing to Pop().");
 	}
@@ -213,21 +218,28 @@ void LinkedList::RemoveValue(int value) {
 		previous = current;
 		current = current->next;
 	}
+
 	if (current->item == value) {
-		if (previous == NULL)
+		if (previous == NULL) {
 			head = current->next;
-		// TODO: Account for tail in case of removing single item from list
+			// Account for tail in case of removing item from one item list
+			// this fixes case where list = [0]
+			// without breaking case where list = [0, 1, 2, 3, 4] remove 3.
+			if (head == NULL)
+				tail = NULL;
+		}
 		else {
-			if (current == tail)
+			if (current == tail) 
 				tail = previous;
 			previous->next = current->next;
 		}
 		delete current;
 		size--;
 	}
-	else
+	else {
 		throw std::runtime_error("Value not found in list, cannot remove!");
 		//printf("%d not found, cannot remove!\n", value);
+	}
 }
 
 void LinkedList::Erase(int value) {
@@ -235,21 +247,27 @@ void LinkedList::Erase(int value) {
 	int count = 0;	
 	Node *current = head;
 	Node *previous = NULL;
-	// Doesn't hand end case, neither does do{} while; loop.
-	// while (current->next != NULL)
 	for (int i = 0; i < size; i++) {
+		// handle front case
 		if (current->item == value) {
 			if (previous == NULL) {
 				head = current->next;
-				free(current);			
+				delete current;			
 				current = head;
 			}
+			// handle middle case
 			else {
 				previous->next = current->next;
-				free(current);
+				delete current;
 				current = previous->next;
 			}
-			count++;		}
+			// TAIL: Adjust tail when erasing end item or from single item list
+			if (current == NULL) {
+				tail = previous;
+			}
+			count++;		
+		}
+		// handle non-case
 		else {
 			previous = current;
 			current = current->next;
@@ -260,8 +278,10 @@ void LinkedList::Erase(int value) {
 }
 
 void LinkedList::Reverse() {
-	// TODO: Study this cause it works and I wrote it but it hasn't
-	//		 really sunk in yet.
+	// TODO, TAIL: Check that this works.
+	tail = head;
+	// TODO: Study this cause it works and I wrote it but it hasn't really sunk in yet.
+
 	Node *prev = NULL;
 	Node *curr = head;
 	Node *n;
@@ -285,10 +305,11 @@ LinkedList::~LinkedList() {
 	Node *current = head;
 	while (current->next != NULL) {
 		head = head->next;
-		free(current);
+		delete current;
 		current = head;
 	}
-	free(head);	
+	delete head;
+	// TAIL: Don't need to free tail because head == tail?
 
 	/*	StackOverflow's
 	Node *current = head;
