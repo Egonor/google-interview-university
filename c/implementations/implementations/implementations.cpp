@@ -4,6 +4,7 @@
 #include "stdafx.h"
 #include "vector.h"
 #include "linkedlist.h"
+#include "queue.h"
 
 // To WATCH use "storage, 10" (to display 10 array values){ <arrayname>, <#num values>
 
@@ -23,9 +24,38 @@ void PrintList(LinkedList *l) {
 
 int main()
 {
-	// TAIL: LinkedList Tail Tests
+
+#pragma region Queue Tests
+
+
+	// ListQueue Tests
+	/*
+	ListQueue lQ;
+
+	printf("\nlq.Size = %d\n", lQ.Size());
+	printf(lQ.isEmpty() ? "lQ Empty\n" : "lq NOT Empty\n");
+
+	lQ.Enqueue(1);
+	lQ.Enqueue(2);
+	lQ.Enqueue(3);
+	lQ.Enqueue(4);
+	printf("\nlq.Size = %d\n", lQ.Size());
+	printf(lQ.isEmpty() ? "lQ Empty\n" : "lq NOT Empty\n");
+	
+	printf("Dequeued: %d\n", lQ.Dequeue());
+	printf("Dequeued: %d\n", lQ.Dequeue());
+	printf("Dequeued: %d\n", lQ.Dequeue());
+	printf("Dequeued: %d\n", lQ.Dequeue());
+
+	printf("\nlq.Size = %d\n", lQ.Size());
+	printf(lQ.isEmpty() ? "lQ Empty\n" : "lq NOT Empty\n");
+	*/
+
+#pragma endregion
+
+#pragma region LinkedList Tail Tests
 	// TODO: Are all the TAIL pointer adjustments unneccesary because I don't understand pointers?
-	/**/
+	/*
 	printf("\n-----List 1-----\n");
 	LinkedList t;
 	printf(t.isEmpty() ? "isEmpty()?: true\n" : "isEmpty()?: false\n");
@@ -89,6 +119,8 @@ int main()
 
 	printf("\nSize of t = %d\n", t.Size());
 	printf(t.isEmpty() ? "isEmpty()?: true\n" : "isEmpty()?: false\n");
+	*/
+#pragma endregion
 
 #pragma region Vector Tests
 	/*

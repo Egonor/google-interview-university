@@ -1,11 +1,9 @@
 #pragma once
 
-
 #ifndef VECTOR_H
 #define VECTOR_H
 
 #endif
-
 
 class Vector {
 private:
@@ -33,7 +31,4 @@ public:
 	void Remove(int value);				// remove any indexes containing value
 
 	int Find(int value);				// return first index of value	
-
 };
-
-

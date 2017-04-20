@@ -2,7 +2,7 @@
 #include "linkedlist.h"
 
 
-Node* create(int item, Node* next) {
+Node* create(int value, Node* next) {
 	Node* new_node = new Node();
 	/* Malloc Version
 	Node* new_node = (Node*)malloc(sizeof(Node));
@@ -11,7 +11,7 @@ Node* create(int item, Node* next) {
 		exit(0);
 	}
 	*/
-	new_node->item = item;
+	new_node->value = value;
 	new_node->next = next;
 	return new_node;
 }
@@ -22,10 +22,10 @@ LinkedList::LinkedList() {
 	size = 0;
 }
 
-LinkedList::LinkedList(int item) {
+LinkedList::LinkedList(int value) {
 	//head = new Node();
-	//head->item = item;
-	head = create(item, NULL);
+	//head->value = value;
+	head = create(value, NULL);
 	tail = head;
 	size = 1;
 }
@@ -47,14 +47,14 @@ int LinkedList::Access(int index) {
 	}
 	// TAIL: Access()ing the end is O(1) with a tail pointer.
 	else if (index == (size - 1)) {
-		return tail->item;
+		return tail->value;
 	}
 	else {
 		Node *curr = head;
 		for (int i = 0; i < index; i++) {
 			curr = curr->next;
 		}
-		return curr->item;
+		return curr->value;
 		/* THIS WORKS BUT I REWROTE AS A FOR LOOP
 		int count = 0;
 		Node* current = head;
@@ -62,14 +62,14 @@ int LinkedList::Access(int index) {
 			current = current->next;
 			count++;
 		}
-		return current->item;
+		return current->value;
 		*/
 	}
 }
 
 int LinkedList::Front() {
 	if ( !isEmpty() )
-		return head->item;
+		return head->value;
 	else
 		throw std::out_of_range("Attempted to Access() empty list.");
 }
@@ -77,7 +77,7 @@ int LinkedList::Front() {
 int LinkedList::Back() {
 	// O(1) with tail pointer.
 	if (!isEmpty())
-		return tail->item;
+		return tail->value;
 		//return Access(size - 1);
 	else
 		throw std::out_of_range("Attempted to Access() empty list.");
@@ -86,7 +86,7 @@ int LinkedList::Back() {
 	while (current->next != NULL) {
 		current = current->next;
 	}
-	return current->item;	
+	return current->value;	
 	*/
 }
 
@@ -99,7 +99,7 @@ int LinkedList::AccessFromEnd(int n) {
 }
 
 void LinkedList::PushFront(int value) {
-	// TAIL: PushFront() must adjust tail in single-item list
+	// TAIL: PushFront() must adjust tail in single-value list
 	//			w/o tail pointer, only need the else condition.
 	if (head == NULL) {
 		head = create(value, head);
@@ -162,7 +162,7 @@ void LinkedList::PopFront() {
 	Node* temp = head->next;
 	delete head;
 	head = temp;
-	// TAIL: PopFront() adjust tail for single item list.
+	// TAIL: PopFront() adjust tail for single value list.
 	if (head == NULL)
 		tail = head;
 	size--;	
@@ -213,16 +213,16 @@ void LinkedList::RemoveValue(int value) {
 
 	Node *current = head;
 	Node *previous = NULL;
-	while (current->item != value && current->next != NULL) 
+	while (current->value != value && current->next != NULL) 
 	{
 		previous = current;
 		current = current->next;
 	}
 
-	if (current->item == value) {
+	if (current->value == value) {
 		if (previous == NULL) {
 			head = current->next;
-			// Account for tail in case of removing item from one item list
+			// Account for tail in case of removing value from one value list
 			// this fixes case where list = [0]
 			// without breaking case where list = [0, 1, 2, 3, 4] remove 3.
 			if (head == NULL)
@@ -243,13 +243,13 @@ void LinkedList::RemoveValue(int value) {
 }
 
 void LinkedList::Erase(int value) {
-	printf("Removing all items with value %d...\n", value);
+	printf("Removing all values with value %d...\n", value);
 	int count = 0;	
 	Node *current = head;
 	Node *previous = NULL;
 	for (int i = 0; i < size; i++) {
 		// handle front case
-		if (current->item == value) {
+		if (current->value == value) {
 			if (previous == NULL) {
 				head = current->next;
 				delete current;			
@@ -261,7 +261,7 @@ void LinkedList::Erase(int value) {
 				delete current;
 				current = previous->next;
 			}
-			// TAIL: Adjust tail when erasing end item or from single item list
+			// TAIL: Adjust tail when erasing end value or from single value list
 			if (current == NULL) {
 				tail = previous;
 			}
@@ -274,7 +274,7 @@ void LinkedList::Erase(int value) {
 		}
 	}
 	size -= count;
-	printf("Removed %d items.\n", count);
+	printf("Removed %d values.\n", count);
 }
 
 void LinkedList::Reverse() {
