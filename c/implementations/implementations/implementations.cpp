@@ -20,13 +20,57 @@ void PrintList(LinkedList *l) {
 	}
 	printf("]\n");
 }
+ 
 
 
 int main()
 {
 
 #pragma region Queue Tests
+	// ArrayQueue Tests
+	/*
+	ArrayQueue aq;
+	
+	// Test empty ArrayQueue
+	aq.Print();
+	printf("ArrayQueue.isEmpty(t): %s\n", aq.isEmpty() ? "True" : "False");
+	printf("ArrayQueue.isFull(f): %s\n", aq.isFull() ? "True" : "False");
 
+	// Test single item ArrayQueue
+	aq.Enqueue(1);
+	aq.Print();
+	printf("ArrayQueue.isEmpty(f): %s\n", aq.isEmpty() ? "True" : "False");
+	printf("ArrayQueue.isFull(f): %s\n", aq.isFull() ? "True" : "False");
+
+	// Test full ArrayQueue
+	aq.Enqueue(2);
+	aq.Enqueue(3);
+	aq.Enqueue(4);
+	aq.Print();
+	printf("ArrayQueue.isFull(t): %s\n", aq.isFull() ? "True" : "False");
+
+	// Test overwriting full ArrayQueue
+	aq.Enqueue(5);
+	aq.Print();
+	printf("ArrayQueue.isFull(t): %s\n", aq.isFull() ? "True" : "False");
+		
+	// Test removing items from ArrayQueue
+	printf("Removed: %d\n", aq.Dequeue());
+
+	aq.Print();
+	printf("ArrayQueue.isEmpty(f): %s\n", aq.isEmpty() ? "True" : "False");
+	printf("ArrayQueue.isFull(f): %s\n", aq.isFull() ? "True" : "False");
+
+	printf("Removed: %d\n", aq.Dequeue());
+	printf("Removed: %d\n", aq.Dequeue());
+	printf("Removed: %d\n", aq.Dequeue());
+
+	// Test emptied ArrayQueue
+	aq.Print();
+	printf("ArrayQueue.isEmpty(t): %s\n", aq.isEmpty() ? "True" : "False");
+	printf("ArrayQueue.isFull(f): %s\n", aq.isFull() ? "True" : "False");
+	*/
+	
 
 	// ListQueue Tests
 	/*
@@ -198,5 +242,5 @@ int main()
 	
 #pragma endregion
 	
-	printf(0);
+	printf("End...");
 }

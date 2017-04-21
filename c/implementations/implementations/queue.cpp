@@ -46,12 +46,18 @@ int ListQueue::Dequeue() {
 #pragma endregion
 
 
+#pragma region ArrayQueue
 ArrayQueue::ArrayQueue() {
-
+	size = 0;
+	readCursor = 0;
+	writeCursor = 0;
 }
 
 ArrayQueue::ArrayQueue(int value) {
-
+	size = 0;
+	readCursor = 0;
+	writeCursor = 0;
+	Enqueue(value);
 }
 
 /*
@@ -59,7 +65,6 @@ ArrayQueue::~ArrayQueue() {
 
 }
 */
-
 
 int ArrayQueue::Size() {
 	return size;
@@ -70,7 +75,7 @@ bool ArrayQueue::isEmpty() {
 }
 
 bool ArrayQueue::isFull() {
-	return size == 4;
+	return size == bufferSize;
 }
 
 void ArrayQueue::Enqueue(int value) {
@@ -79,27 +84,66 @@ void ArrayQueue::Enqueue(int value) {
 	// * Uses a circular buffer to store queue
 
 	buffer[writeCursor] = value;
-	// wrap if writing to end of array
-	if (writeCursor == (size - 1))
-		writeCursor = 0;
-	else
-		writeCursor++;
+
+	// If we've overwritten at readCursor, we have to increment
+	// readCursor to the next (least recently added) value
+	if (writeCursor == readCursor)
+		readCursor = ((readCursor + 1) % bufferSize);
+
+	// Wrap writeCursor if writing to end of buffer
+	writeCursor = ((writeCursor + 1) % bufferSize);
+
+	// TODO: This increases on the case where write wraps and read should still be 0 (off by +1)
+
+	// We've enqueued more than our buffer can hold so...
+	// we're overwriting/queue wrapping and size doesn't increase
+	if (size < bufferSize)
+		size++;
+	
+	/*
+	// write to end case
+	[1r, 2, 3, 4, w]
+	enqueue(5);
+	[1rw, 2, 3, 4, 5]
+	just write++;
+
+	// write to wrapped 0 case
+	[1rw, 2, 3, 4, 5]
+	enqueue(6);
+	[6, 2rw, 3, 4, 5]
+	read++ and write++;
+	*/
+
 }
 
 int ArrayQueue::Dequeue() {
 	int removed = buffer[readCursor];
-	if (removed == NULL) {
+
+	//if (removed == NULL) {
 		// End of queue (figure out what to do that's not fail)
 		// Queue can't hold zero values? set to -1, queue can't hold negative values...
-	}
+	//}
 	// Delete item as it has been read.
-	buffer[readCursor] = NULL;
+	buffer[readCursor] = -1;
 
-	// TODO: These don't maintain the read/write order, they just dumbly wrap.
-	if (readCursor == (size - 1))
+	if (readCursor == (bufferSize - 1))
 		readCursor = 0;
 	else
 		readCursor++;
 
+	size--;
 	return removed;
 }
+
+// * Just for testing purposes...
+//		- Prints only positive list integers (if condition)
+//		- Prints buffer start to finish (not read -> end queue order)
+void ArrayQueue::Print() {
+	printf("ArrayQueue [");
+	for (int i = 0; i < bufferSize; i++) {
+		if (buffer[i] >= -1)
+			printf("%d, ", buffer[i]);
+	}
+	printf("]\n");
+}
+#pragma endregion
