@@ -28,6 +28,8 @@ public:
 	//LinkedList(int value, Node *next);
 	~LinkedList();
 
+	void PrintList();
+
 	int Size();								// return number of data elements in list
 	bool isEmpty();							// return true if list is empty
 

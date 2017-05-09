@@ -2,11 +2,9 @@
 
 #ifndef QUEUE_H
 #define QUEUE_H
-
 #endif
 
 #include "linkedlist.h"
-
 
 class ListQueue {
 private:

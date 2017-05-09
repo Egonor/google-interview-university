@@ -138,6 +138,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="dictionary.h" />
     <ClInclude Include="linkedlist.h" />
     <ClInclude Include="queue.h" />
     <ClInclude Include="stdafx.h" />
@@ -145,6 +146,7 @@
     <ClInclude Include="vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="dictionary.cpp" />
     <ClCompile Include="implementations.cpp" />
     <ClCompile Include="linkedlist.cpp" />
     <ClCompile Include="queue.cpp" />

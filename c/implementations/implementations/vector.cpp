@@ -13,6 +13,12 @@ Vector::Vector() {
 	//	storage[i] = 0;
 }
 
+Vector::Vector(int initialSize) {
+	size = 0;
+	capacity = initialSize;
+	storage = new int[capacity]();
+}
+
 /*********************Public*****************************/
 int Vector::Size() {
 	return size;

@@ -1,30 +1,46 @@
-// implementations.cpp : Defines the entry point for the console application.
-//
-
 #include "stdafx.h"
 #include "vector.h"
 #include "linkedlist.h"
 #include "queue.h"
+#include "dictionary.h"
 
 // To WATCH use "storage, 10" (to display 10 array values){ <arrayname>, <#num values>
 
-// Takes a pointer to a linked list because it calls
-// destructor if given an actual list...
-// Why it doesn't give it a copy, I don't understand...
-// TODO: Look up Copy Constructor = may need to define copy's behavior for pass by value.
-// https://stackoverflow.com/questions/21215409/does-c-pass-objects-by-value-or-reference
-void PrintList(LinkedList *l) {
-	printf("List[");
-	for (int i = 0; i < l->Size(); i++) {
-		printf("%d, ", l->Access(i));
-	}
-	printf("]\n");
-}
- 
-
-
 int main()
 {
+	/* c++ hash 
+	hash<string> hash_fn;
+	size_t hash = hash_fn(s);	
+	printf("%d", hash);
+	*/
+
+	string temp = "Supposedly there are over one million words in the English Language. We trimmed some fat to take away really odd words and determiners. Then we grabbed the most popular words and built this word randomizer. Just keep clicking generate—chances are you won't find a repeat!";
+
+	Dictionary d(16);
+
+	d.Insert(" over", 69);
+	
+	printf("Inserting 'alpha' at hash: %d\n", d.Insert("alpha", 100));			// 11
+	printf("Inserting 'beta' at hash: %d\n", d.Insert("beta", 200));			// 1
+	
+	printf("Does 'alpha' exist? %s\n", d.Exists("alpha") ? "true" : "false");	// true
+	printf("Does charlie exist? %s\n", d.Exists("charlie") ? "true" : "false");	// false
+
+	printf("Value of 'beta': %d\n", d.GetValue("beta"));							// 200
+	printf("Value of 'gamma': %d\n", d.GetValue("gamma"));						// Error
+
+	printf("Delete 'beta' @: %d\n", d.Delete("beta"));
+	printf("Delete 'zulu' @: %d\n", d.Delete("zulu"));
+	
+
+
+	// Test Growth
+	for (int i = 0; i < (25*5); i+=5) {
+		string t = temp.substr(i, 5);
+		printf("Inserting '%s' at hash: %d\n", t.c_str(), d.Insert(t, i));
+	}
+	d.Size();	
+
 
 #pragma region Queue Tests
 	// ArrayQueue Tests

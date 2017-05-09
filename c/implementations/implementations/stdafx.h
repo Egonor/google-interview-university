@@ -14,3 +14,19 @@
 // Reference additional headers your program requires here
 #include <stdexcept>
 #include <ctime>
+#include <string>
+#include <vector>		// for hashing without rewriting Vector() to have generic types
+#include <functional>	// this is "hash": for testing purposes
+#include <iostream>		// cout
+
+
+typedef int8_t i8;		// BYTE
+typedef int16_t i16;	// WORD
+typedef int32_t i32;	// DWORD
+typedef int64_t i64;	// QWORD
+
+
+typedef uint8_t u8;		// BYTE
+typedef uint16_t u16;	// WORD
+typedef uint32_t u32;	// DWORD
+typedef uint64_t u64;	// QWORD (4 16-bit WORDS)

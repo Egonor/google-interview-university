@@ -30,6 +30,14 @@ LinkedList::LinkedList(int value) {
 	size = 1;
 }
 
+void LinkedList::PrintList() {
+	printf("\nList[");
+	for (int i = 0; i < size; i++) {
+		printf("%d, ", Access(i));
+	}
+	printf("]\n");
+}
+
 int LinkedList::Size() {
 	return size;
 }

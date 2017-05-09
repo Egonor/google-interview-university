@@ -15,6 +15,7 @@ private:
 
 public:
 	Vector();
+	Vector(int initialSize);			// initialize a vector with a starting size
 
 	int Size();							// return Size of Mutable Array
 	int Capacity();						// return Capacity of Mutable Array
