@@ -150,6 +150,7 @@
     <ClCompile Include="implementations.cpp" />
     <ClCompile Include="linkedlist.cpp" />
     <ClCompile Include="queue.cpp" />
+    <ClCompile Include="search.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

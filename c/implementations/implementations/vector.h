@@ -32,4 +32,8 @@ public:
 	void Remove(int value);				// remove any indexes containing value
 
 	int Find(int value);				// return first index of value	
+    // 5/17/17
+    // should be u32?  vector[u32] doesn't work so would have to rewrite
+    int BinarySearch(int value);        // Binary search the vector
+    int BinarySearchR(int value);       // Binary search using recursion
 };

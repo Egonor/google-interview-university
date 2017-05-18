@@ -1,14 +1,3 @@
-﻿  implementations.cpp
-  dictionary.cpp
-j:\git\google-interview-university\c\implementations\implementations\dictionary.cpp(9): warning C4018: '<': signed/unsigned mismatch
-j:\git\google-interview-university\c\implementations\implementations\dictionary.cpp(33): warning C4018: '<': signed/unsigned mismatch
-j:\git\google-interview-university\c\implementations\implementations\dictionary.cpp(68): warning C4018: '<': signed/unsigned mismatch
-j:\git\google-interview-university\c\implementations\implementations\dictionary.cpp(92): warning C4018: '<': signed/unsigned mismatch
-j:\git\google-interview-university\c\implementations\implementations\dictionary.cpp(115): warning C4018: '<': signed/unsigned mismatch
-j:\git\google-interview-university\c\implementations\implementations\dictionary.cpp(154): warning C4018: '<': signed/unsigned mismatch
-  Generating Code...
-j:\git\google-interview-university\c\implementations\implementations\dictionary.cpp(86): warning C4715: 'Dictionary::Exists': not all control paths return a value
-j:\git\google-interview-university\c\implementations\implementations\dictionary.cpp(102): warning C4715: 'Dictionary::GetValue': not all control paths return a value
-j:\git\google-interview-university\c\implementations\implementations\dictionary.cpp(172): warning C4715: 'Dictionary::Delete': not all control paths return a value
+﻿  vector.cpp
   implementations.vcxproj -> J:\Git\google-interview-university\c\implementations\Debug\implementations.exe
   implementations.vcxproj -> J:\Git\google-interview-university\c\implementations\Debug\implementations.pdb (Partial PDB)

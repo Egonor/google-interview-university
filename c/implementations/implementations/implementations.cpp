@@ -8,12 +8,34 @@
 
 int main()
 {
-	/* c++ hash 
-	hash<string> hash_fn;
-	size_t hash = hash_fn(s);	
-	printf("%d", hash);
-	*/
+#pragma region Binary Search Test
+    // Setup sorted vector [0, ... 9]
+    Vector bin;
+    for (int i = 0; i < 10; ++i) {
+        bin.Push(i);
+    }
 
+    printf("0 is at index: %d\n", bin.BinarySearch(0));
+    printf("1 is at index: %d\n", bin.BinarySearch(1));
+    printf("2 is at index: %d\n", bin.BinarySearch(2));
+    printf("3 is at index: %d\n", bin.BinarySearch(3));
+    printf("4 is at index: %d\n", bin.BinarySearch(4));
+    printf("5 is at index: %d\n", bin.BinarySearch(5));
+    printf("6 is at index: %d\n", bin.BinarySearch(6));
+    printf("7 is at index: %d\n", bin.BinarySearch(7));
+    printf("8 is at index: %d\n", bin.BinarySearch(8));
+    printf("9 is at index: %d\n", bin.BinarySearch(9));
+
+
+#pragma endregion
+
+#pragma region Hash Tests
+    /*
+    // c++ hash 
+	// hash<string> hash_fn;
+	// size_t hash = hash_fn(s);	
+	// printf("%d", hash);
+	
 	string temp = "Supposedly there are over one million words in the English Language. We trimmed some fat to take away really odd words and determiners. Then we grabbed the most popular words and built this word randomizer. Just keep clicking generate—chances are you won't find a repeat!";
 
 	Dictionary d(16);
@@ -32,15 +54,14 @@ int main()
 	printf("Delete 'beta' @: %d\n", d.Delete("beta"));
 	printf("Delete 'zulu' @: %d\n", d.Delete("zulu"));
 	
-
-
 	// Test Growth
 	for (int i = 0; i < (25*5); i+=5) {
 		string t = temp.substr(i, 5);
 		printf("Inserting '%s' at hash: %d\n", t.c_str(), d.Insert(t, i));
 	}
 	d.Size();	
-
+    */
+#pragma endregion
 
 #pragma region Queue Tests
 	// ArrayQueue Tests

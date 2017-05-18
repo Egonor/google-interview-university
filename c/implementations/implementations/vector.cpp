@@ -131,6 +131,30 @@ int Vector::Find(int value) {
 	return -1;
 }
 
+int Vector::BinarySearch(int value) {
+    int max = size;
+    int middle = max / 2;
+    while ((middle >= 0) | (middle <= size))
+    {
+        if (value == storage[middle])
+            return middle;
+        else if (value > storage[middle]) {
+            middle = ((max + middle) / 2);
+        }
+        else if (value < storage[middle]) {
+            max = middle;
+            middle = max / 2;
+        }
+    }
+    printf("ERROR: Value not found in vector!");
+    return -1;
+    
+}
+
+int Vector::BinarySearchR(int value) {
+    return 0;
+}
+
 /*********************Private*****************************/
 void Vector::Resize() {
 	// TODO: Array only Grows, doesn't shrink
