@@ -3,46 +3,48 @@
 
 
 /******************Constructor***************************/
-Vector::Vector() {
+template<typename T>
+Vector<T>::Vector() {
 	size = 0;
 	capacity = 2;
-	storage = new int[capacity]();
+	storage = new T[capacity];
 
 	// Write intial values to 0
+    // *** THIS WOULD NEED TO BE ADDED TO RESIZE TOO
 	//for (int i = 0; i < capacity; i++)
-	//	storage[i] = 0;
+	//	storage[i] = T();
 }
-
-Vector::Vector(int initialSize) {
-	size = 0;
-	capacity = initialSize;
-	storage = new int[capacity]();
-}
+template class Vector<int>;
 
 /*********************Public*****************************/
-int Vector::Size() {
+template<typename T>
+u32 Vector<T>::Size() {
 	return size;
 }
 
-int Vector::Capacity() {
+template<typename T>
+u32 Vector<T>::Capacity() {
 	return capacity;
 }
 
-bool Vector::isEmpty() {
+template<typename T>
+bool Vector<T>::isEmpty() {
 	if (size == 0) 
 		return true; 
 	else 
 		return false; 
 }
 
-int Vector::Access(int index) {
+template<typename T>
+u32 Vector<T>::Access(u32 index) {
 	if (index <= size && index >= 0)
 		return storage[index];
 	else
 		throw std::out_of_range("Tried to Access() invalid index.");
 }
 
-void Vector::Push(int value) {
+template<typename T>
+void Vector<T>::Push(T value) {
 	if (size < capacity)
 		storage[size] = value;
 	else {
@@ -52,13 +54,14 @@ void Vector::Push(int value) {
 	size++;
 }
 
-void Vector::Insert(int index, int value) {
+template<typename T>
+void Vector<T>::Insert(u32 index, T value) {
 	// TODO: Handle index == 0 with Prepend() or in here
 	if (index > 0) {
 		if (size + 1 == capacity)
-			Resize();
+			Resize(); //TODO: Resize(1); for growth
 
-		int * temp = new int[capacity];
+		T * temp = new T[capacity];
 
 		for (int i = 0; i < size + 1; i++) {
 			if (i < index)
@@ -76,16 +79,18 @@ void Vector::Insert(int index, int value) {
 	}
 }
 
-int Vector::Pop() {
+template<typename T> 
+T Vector<T>::Pop() {
 	// TODO: Resize by half if size <= cap / 2
 	// Value still exists, the tracker for Size is just moved ahead of it.
-	int val = storage[size];
+	T val = storage[size];
 	size--;
 	return val;
 }
 
-void Vector::Delete(int index) {
-	int * temp = new int[capacity];
+template<typename T>
+void Vector<T>::Delete(u32 index) {
+	T * temp = new T[capacity];
 
 	for (int i = 0; i < size - 1; i++) {
 		if (i < index)
@@ -101,7 +106,8 @@ void Vector::Delete(int index) {
 
 // Remove all occurences of 'value' from Dynamic Array
 // Not O(n) AT ALL - Maybe O(n^2)?
-void Vector::Remove(int value) {
+template<typename T>
+void Vector<T>::Remove(T value) {
 	for (int i = 0; i < size; i++) {
 		if (storage[i] == value) {
 			Delete(i);
@@ -123,7 +129,8 @@ void Vector::Remove(int value) {
 }
 
 // Linear Search array, return the first found index of value, if not found return -1
-int Vector::Find(int value) {
+template<typename T>
+u32 Vector<T>::Find(T value) {
 	for (int i = 0; i < size; i++) {
 		if (storage[i] == value) 
 			return i;
@@ -131,7 +138,9 @@ int Vector::Find(int value) {
 	return -1;
 }
 
-int Vector::BinarySearch(int value) {
+// INT ONLY
+template<>
+int Vector<int>::BinarySearch(int value) {
     int max = size;
     int middle = max / 2;
     while ((middle >= 0) | (middle <= size))
@@ -151,15 +160,27 @@ int Vector::BinarySearch(int value) {
     
 }
 
-int Vector::BinarySearchR(int value) {
-    return 0;
+template<>
+int Vector<int>::BinarySearchR(int value, int min, int max) {
+    if (max < min)
+        return -1; // value not in array
+
+    int midpoint = ((max + min) / 2);
+
+    if (storage[midpoint] < value)
+        BinarySearchR(value, (midpoint + 1), max);
+    else if (storage[midpoint] > value)
+        BinarySearchR(value, min, midpoint - 1);
+    else
+        return midpoint;
 }
 
 /*********************Private*****************************/
-void Vector::Resize() {
+template<typename T>
+void Vector<T>::Resize() {
 	// TODO: Array only Grows, doesn't shrink
 	capacity = capacity * 2;
-	int * temp = new int[capacity];
+	T * temp = new T[capacity];
 
 	for (int i = 0; i < size; i++)
 		temp[i] = storage[i];
