@@ -3,11 +3,31 @@
 #include "linkedlist.h"
 #include "queue.h"
 #include "dictionary.h"
+#include "GenericVector.h"
 
 // To WATCH use "storage, 10" (to display 10 array values){ <arrayname>, <#num values>
 
 int main()
 {
+
+
+    Vector<int> vec;
+
+    vec.Push(1234);
+    vec.Push(2341);
+    vec.Push(3412);
+    vec.Push(4123);
+
+    GenericVector<int> genVec;
+
+    genVec.Push(1234);
+    genVec.Push(999);
+    genVec.Push(2);  // TODO: TEST
+    genVec.Push(3);
+    genVec.Push(4);
+
+        
+    /*
 #pragma region Binary Search Test
     // Setup sorted vector [0, ... 9]
     Vector bin;
@@ -26,8 +46,11 @@ int main()
     printf("8 is at index: %d\n", bin.BinarySearch(8));
     printf("9 is at index: %d\n", bin.BinarySearch(9));
 
+    printf("0 is at index: %d\n", bin.BinarySearchR(0, 0, bin.Size()));
+
 
 #pragma endregion
+*/
 
 #pragma region Hash Tests
     /*

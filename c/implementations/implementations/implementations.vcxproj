@@ -138,11 +138,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BinaryTree.h" />
     <ClInclude Include="dictionary.h" />
+    <ClInclude Include="GenericVector.h" />
     <ClInclude Include="linkedlist.h" />
     <ClInclude Include="queue.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="tree.h" />
     <ClInclude Include="vector.h" />
   </ItemGroup>
   <ItemGroup>

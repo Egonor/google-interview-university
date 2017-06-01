@@ -36,6 +36,15 @@
     <ClInclude Include="dictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GenericVector.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
