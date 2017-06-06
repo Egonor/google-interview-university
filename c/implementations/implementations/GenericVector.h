@@ -5,7 +5,6 @@
 #ifndef GenericVector_H
 #define GenericVector_H
 
-#endif
 
 template <typename T>                   // T = int> Default type to int: use as GenericVector<> myV;
 class GenericVector {
@@ -175,8 +174,8 @@ template<>
 int GenericVector<int>::BinarySearch(int value) {
     int max = size;
     int middle = max / 2;
-    while ((middle >= 0) | (middle <= size))
-    {
+    while ((middle >= 0) | (middle <= (int)size)) // TODO: rewrite this 
+    {                                             //       * size is u32 so we must cast size to int
         if (value == storage[middle])
             return middle;
         else if (value > storage[middle]) {
@@ -192,7 +191,7 @@ int GenericVector<int>::BinarySearch(int value) {
 
 }
 
-template<>
+//template<typename T>
 int GenericVector<int>::BinarySearchR(int value, int min, int max) {
     if (max < min)
         return -1; // value not in array
@@ -205,6 +204,8 @@ int GenericVector<int>::BinarySearchR(int value, int min, int max) {
         BinarySearchR(value, min, midpoint - 1);
     else
         return midpoint;
+
+    return NULL; // should never be called
 }
 
 /*********************Private*****************************/
@@ -220,3 +221,5 @@ void GenericVector<T>::Resize() {
     delete[] storage;
     storage = temp;
 }
+
+#endif

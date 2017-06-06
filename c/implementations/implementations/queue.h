@@ -2,7 +2,6 @@
 
 #ifndef QUEUE_H
 #define QUEUE_H
-#endif
 
 #include "linkedlist.h"
 
@@ -46,3 +45,5 @@ public:
 
 	void Print();
 };
+
+#endif

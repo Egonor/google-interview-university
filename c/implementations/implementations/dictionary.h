@@ -6,7 +6,6 @@
 #pragma once
 #ifndef DICTIONARY_H
 #define DICTIONARY_H
-#endif
 
 // HashTable w/ LinkedLists REQUIRES a Node with Key:Value pairs to exists/delete
 // TODO: Make Vector() generic to implement Chaining
@@ -68,3 +67,5 @@ public:
 // O(n + m) memory used
 // Alpha = (n / m) or Load Factor (% of table filled)
 // Operations run in O(c + 1) time.
+
+#endif

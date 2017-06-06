@@ -3,7 +3,6 @@
 #ifndef LINKEDLIST_H
 #define LINKEDLIST_H
 
-#endif
 
 // Advantages of Linked Lists:
 // 1) Inserting an value is O(1) IF you have a reference to previous node.
@@ -49,3 +48,5 @@ public:
 
 	void Reverse();							// reverse the list
 };
+
+#endif

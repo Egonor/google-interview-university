@@ -4,13 +4,67 @@
 #include "queue.h"
 #include "dictionary.h"
 #include "GenericVector.h"
+#include "BinaryTree.h"
+#include "bst.h"
 
-// To WATCH use "storage, 10" (to display 10 array values){ <arrayname>, <#num values>
 
 int main()
 {
 
+#pragma region Binary Search Tree Tests
+    BST tree;
+    
+    /*  0
+        5
+       / \
+       2  6
+        \  \
+        4   8
+       /   / \
+      3   7   9         
+    */
 
+    // root
+    AddToTree(&tree, 5);    
+    AddToTree(&tree, 2);    // test right child only (delete 2)
+    AddToTree(&tree, 4);    // test left child only (delete 4)
+    AddToTree(&tree, 3);
+    // for both children
+    AddToTree(&tree, 6);
+    AddToTree(&tree, 8);
+    AddToTree(&tree, 7);
+    AddToTree(&tree, 9);    // test both children (delete 8)
+
+    PrintTree(&tree);
+    DeleteFromTree(&tree, 2);   // test right child only (delete 2)
+    PrintTree(&tree);
+    DeleteFromTree(&tree, 4);   // test left child only (delete 4)
+    PrintTree(&tree);
+    DeleteFromTree(&tree, 8);
+    PrintTree(&tree);
+
+
+    
+    /*AddToTreeCoursera(&tree, 3);
+    AddToTreeCoursera(&tree, 1);
+    AddToTreeCoursera(&tree, 7);
+    AddToTreeCoursera(&tree, 2);
+    AddToTreeCoursera(&tree, 6);
+    AddToTreeCoursera(&tree, 5);*/
+    
+    /*
+    BinaryTree<int> tree(5);// = new BinaryTree<int>(5);// = new BinaryTree<int>(1, NULL);
+    tree.Add(1);
+    tree.Add(3);
+    tree.Add(6);
+    tree.Add(7);
+    tree.Add(9);
+    */
+#pragma endregion
+
+#pragma region GenericVector (template) Tests
+    /*
+    // To WATCH use "storage, 10" (to display 10 array values){ <arrayname>, <#num values>
     Vector<int> vec;
 
     vec.Push(1234);
@@ -25,10 +79,11 @@ int main()
     genVec.Push(2);  // TODO: TEST
     genVec.Push(3);
     genVec.Push(4);
-
-        
-    /*
+    */
+#pragma endregion
+            
 #pragma region Binary Search Test
+    /*
     // Setup sorted vector [0, ... 9]
     Vector bin;
     for (int i = 0; i < 10; ++i) {
@@ -47,10 +102,9 @@ int main()
     printf("9 is at index: %d\n", bin.BinarySearch(9));
 
     printf("0 is at index: %d\n", bin.BinarySearchR(0, 0, bin.Size()));
-
+    */
 
 #pragma endregion
-*/
 
 #pragma region Hash Tests
     /*

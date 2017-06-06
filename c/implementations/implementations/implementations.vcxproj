@@ -139,6 +139,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BinaryTree.h" />
+    <ClInclude Include="bst.h" />
     <ClInclude Include="dictionary.h" />
     <ClInclude Include="GenericVector.h" />
     <ClInclude Include="linkedlist.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bst.cpp" />
     <ClCompile Include="dictionary.cpp" />
     <ClCompile Include="implementations.cpp" />
     <ClCompile Include="linkedlist.cpp" />
