@@ -1,44 +1,39 @@
 # Coding Interview University
 
-<<<<<<< HEAD
->**I originally created this as a short to-do list of study topics, but it grew to the large list you see today. Working at
-Google was the original motivator, hence the name. [I didn't get an interview at Google](https://googleyasheck.com/i-didnt-get-hired-heres-why/),
-but the repo name lives on, and it would mess up a lot of folks to change it now. The items listed here will prepare you
-for a career at just about any software company, including the giants: Amazon, Microsoft, Google, and Facebook.**
-=======
-> I originally created this as a short to-do list of study topics for becoming a software engineer, 
-> but it grew to the large list you see today. After going through this study plan, [I got hired 
-> as a Software Development Engineer at Amazon](https://startupnextdoor.com/ive-been-acquired-by-amazon/?src=ciu)! 
+> I originally created this as a short to-do list of study topics for becoming a software engineer,
+> but it grew to the large list you see today. After going through this study plan, [I got hired
+> as a Software Development Engineer at Amazon](https://startupnextdoor.com/ive-been-acquired-by-amazon/?src=ciu)!
 > You probably won't have to study as much as I did. Anyway, everything you need is here.
 >
-> The items listed here will prepare you well for in an interview at just about any software company, 
+> The items listed here will prepare you well for in an interview at just about any software company,
 > including the giants: Amazon, Facebook, Google or Microsoft.
->>>>>>> upstream/master
 >
 > *Best of luck to you!*
 
 Translations:
 - [中文版本](translations/README-cn.md)
-- [Tiếng Việt - Vietnamese](translations/README-vn.md)
-- translations in progress:
-    - [Español](https://github.com/jwasham/coding-interview-university/issues/80)
-    - [हिन्दी](https://github.com/jwasham/coding-interview-university/issues/81)
-    - [עברית](https://github.com/jwasham/coding-interview-university/issues/82)
-    - [Bahasa Indonesia](https://github.com/jwasham/coding-interview-university/issues/101)
-    - [Arabic](https://github.com/jwasham/coding-interview-university/issues/98)
-    - [Turkish](https://github.com/jwasham/coding-interview-university/issues/90)
-    - [French](https://github.com/jwasham/coding-interview-university/issues/89)
-    - [Russian](https://github.com/jwasham/coding-interview-university/issues/87)
-    - [Ukrainian](https://github.com/jwasham/coding-interview-university/issues/106)
-    - [Brazilian Portuguese](https://github.com/jwasham/coding-interview-university/issues/113)
-    - [Korean](https://github.com/jwasham/coding-interview-university/issues/118)
-    - [Telugu](https://github.com/jwasham/coding-interview-university/issues/117)
-    - [Polish](https://github.com/jwasham/coding-interview-university/issues/122)
-    - [German](https://github.com/jwasham/coding-interview-university/issues/135)
-    - [Urdu](https://github.com/jwasham/coding-interview-university/issues/140)
-    - [Thai](https://github.com/jwasham/coding-interview-university/issues/156)
-    - [Greek](https://github.com/jwasham/coding-interview-university/issues/166)
-    - [Italian](https://github.com/jwasham/coding-interview-university/issues/170)
+- [Tiếng Việt - Vietnamese](translations/README-vi.md)
+- [Español](translations/README-es.md)
+
+Translations in progress:
+- [हिन्दी](https://github.com/jwasham/coding-interview-university/issues/81)
+- [עברית](https://github.com/jwasham/coding-interview-university/issues/82)
+- [Bahasa Indonesia](https://github.com/jwasham/coding-interview-university/issues/101)
+- [Arabic](https://github.com/jwasham/coding-interview-university/issues/98)
+- [Turkish](https://github.com/jwasham/coding-interview-university/issues/90)
+- [French](https://github.com/jwasham/coding-interview-university/issues/89)
+- [Russian](https://github.com/jwasham/coding-interview-university/issues/87)
+- [Ukrainian](https://github.com/jwasham/coding-interview-university/issues/106)
+- [Brazilian Portuguese](https://github.com/jwasham/coding-interview-university/issues/113)
+- [Korean](https://github.com/jwasham/coding-interview-university/issues/118)
+- [Telugu](https://github.com/jwasham/coding-interview-university/issues/117)
+- [Polish](https://github.com/jwasham/coding-interview-university/issues/122)
+- [German](https://github.com/jwasham/coding-interview-university/issues/135)
+- [Urdu](https://github.com/jwasham/coding-interview-university/issues/140)
+- [Thai](https://github.com/jwasham/coding-interview-university/issues/156)
+- [Greek](https://github.com/jwasham/coding-interview-university/issues/166)
+- [Italian](https://github.com/jwasham/coding-interview-university/issues/170)
+
 
 ## What is it?
 
@@ -50,19 +45,8 @@ This is meant for **new software engineers** or those switching from
 software/web development to software engineering (where computer science knowledge is required). If you have
 many years of experience and are claiming many years of software engineering experience, expect a harder interview.
 
-<<<<<<< HEAD
-I've pared down what you need to know from what Yegge recommends. I've altered Yegge's requirements
-from information received from a contact at Google. This is meant for **new software engineers** or those switching from
-software/web development to software engineering (where computer science knowledge is required). If you have
-many years of experience and are claiming many years of software engineering experience, expect a harder interview.
-[Read more here](https://googleyasheck.com/what-you-need-to-know-for-your-google-interview-and-what-you-dont/).
-
-If you have many years of software/web development experience, note that large software companies like Google, Amazon,
-Facebook and Microsoft software engineering as different from software/web development, and they require computer science knowledge.
-=======
 If you have many years of software/web development experience, note that large software companies like Google, Amazon,
 Facebook and Microsoft view software engineering as different from software/web development, and they require computer science knowledge.
->>>>>>> upstream/master
 
 If you want to be a reliability engineer or systems engineer, study more from the optional list (networking, security).
 
@@ -240,19 +224,12 @@ Sometimes the classes are not in session so you have to wait a couple of months,
     I'd appreciate your help to add free and always-available public sources, such as YouTube videos to accompany the online course videos.
     I like using university lectures.
 
-
 ## Interview Process & General Interview Prep
 
-<<<<<<< HEAD
-- [x] [ABC: Always Be Coding](https://medium.com/always-be-coding/abc-always-be-coding-d5f8051afce2#.4heg8zvm4)
-- [x] [Whiteboarding](https://medium.com/@dpup/whiteboarding-4df873dbba2e#.hf6jn45g1)
-- [x] [Effective Whiteboarding during Programming Interviews](http://www.coderust.com/blog/2014/04/10/effective-whiteboarding-during-programming-interviews/)
-=======
 - [ ] [ABC: Always Be Coding](https://medium.com/always-be-coding/abc-always-be-coding-d5f8051afce2#.4heg8zvm4)
 - [ ] [Whiteboarding](https://medium.com/@dpup/whiteboarding-4df873dbba2e#.hf6jn45g1)
 - [ ] [Effective Whiteboarding during Programming Interviews](http://www.coderust.com/blog/2014/04/10/effective-whiteboarding-during-programming-interviews/)
 - [ ] [Demystifying Tech Recruiting](https://www.youtube.com/watch?v=N233T0epWTs)
->>>>>>> upstream/master
 - [ ] Cracking The Coding Interview Set 1:
     - [ ] [Gayle L McDowell - Cracking The Coding Interview (video)](https://www.youtube.com/watch?v=rEJzOhC5ZtQ)
     - [ ] [Cracking the Coding Interview with Author Gayle Laakmann McDowell (video)](https://www.youtube.com/watch?v=aClxtDcdpsQ)
