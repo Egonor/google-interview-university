@@ -12,28 +12,27 @@ int main()
 {
 
 #pragma region Binary Search Tree Tests
+    /*
     BST tree;
-    
-    /*  0
+        0
         5
        / \
        2  6
         \  \
         4   8
        /   / \
-      3   7   9         
-    */
+      3   7   9      
 
     // root
-    AddToTree(&tree, 5);    
-    AddToTree(&tree, 2);    // test right child only (delete 2)
-    AddToTree(&tree, 4);    // test left child only (delete 4)
-    AddToTree(&tree, 3);
+    BST_Add(&tree, 5);    
+    BST_Add(&tree, 2);    // test right child only (delete 2)
+    BST_Add(&tree, 4);    // test left child only (delete 4)
+    BST_Add(&tree, 3);
     // for both children
-    AddToTree(&tree, 6);
-    AddToTree(&tree, 8);
-    AddToTree(&tree, 7);
-    AddToTree(&tree, 9);    // test both children (delete 8)
+    BST_Add(&tree, 6);
+    BST_Add(&tree, 8);
+    BST_Add(&tree, 7);
+    BST_Add(&tree, 9);    // test both children (delete 8)
 
     PrintTree(&tree);
     DeleteFromTree(&tree, 2);   // test right child only (delete 2)
@@ -41,16 +40,13 @@ int main()
     DeleteFromTree(&tree, 4);   // test left child only (delete 4)
     PrintTree(&tree);
     DeleteFromTree(&tree, 8);
-    PrintTree(&tree);
+    PrintTree(&tree);   
+    */
 
 
-    
-    /*AddToTreeCoursera(&tree, 3);
-    AddToTreeCoursera(&tree, 1);
-    AddToTreeCoursera(&tree, 7);
-    AddToTreeCoursera(&tree, 2);
-    AddToTreeCoursera(&tree, 6);
-    AddToTreeCoursera(&tree, 5);*/
+    BST root;
+    BST_Add(&root, 5);
+    BST_Print_LevelOrder(&root);
     
     /*
     BinaryTree<int> tree(5);// = new BinaryTree<int>(5);// = new BinaryTree<int>(1, NULL);

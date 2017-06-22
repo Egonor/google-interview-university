@@ -14,18 +14,32 @@ struct BSTNode {
 
 
 struct BST {
-    BSTNode root;
+    BSTNode* root;
 } typedef BST;
 
-BSTNode* NewBstNode(BSTNode* par, int value);
-BSTNode* AddToTree(BST* tree, int value_to_add);
-BSTNode* AddToTreeCoursera(BST* tree, int value_to_add);
+BSTNode* NewBstNode(BSTNode* parent, int value);
+BSTNode* BST_Add(BST* tree, int value_to_add);
+bool     BST_Delete(BST* tree, int value_to_delete);
+BSTNode* BST_Find(BST* tree, int value);
 
-bool DeleteFromTree(BST* tree, int value_to_delete);
+int BST_NodeCount(BSTNode* root);
 
-BSTNode* Find(BST* tree, int value);
+void BST_Print_LevelOrder(BST* tree);
+void BST_Print_PreOrder(BSTNode* root);
+void BST_Print_InOrder(BSTNode* root);
+void BST_Print_PostOrder(BSTNode* root);
 
-void PrintTree(BST* tree);
+// MyCodeSchool
+BSTNode* BST_Insert(BSTNode* root, int value_to_add);
+bool BST_Search(BSTNode* root, int value_to_find);
+
+BSTNode* BST_Min(BSTNode* root);
+int BST_Max(BSTNode* root);
+int BST_Height(BSTNode* root);
+
+bool is_BST(BSTNode *root);
+
+
 
 
 #endif
