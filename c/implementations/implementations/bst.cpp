@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "bst.h"
 
+// TODO: Reimplement/Cleanup. My code uses Tree, MCS uses root.
+//       Either way is fine but using both together is confusing/cumbersome.
+
 // Helper function to create a new node...
 // malloc(sizeof(struct BSTNode)
 BSTNode* NewBstNode(BSTNode* parent, int value) {
@@ -14,77 +17,32 @@ BSTNode* NewBstNode(BSTNode* parent, int value) {
         return new_node;
 }
 
-// MYCODESCHOOL (Mostly recursion)
-// https://www.youtube.com/watch?v=COZK7NATh4k&list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P&index=28
-BSTNode* BST_Insert(BSTNode* root, int value_to_add) {
-    if (root == NULL) {
-        root = NewBstNode(NULL, value_to_add);
-        return root;
-    }
-    else if (value_to_add <= root->value) {
-        root->left = BST_Insert(root->left, value_to_add);
-    }
-    else {
-        root->right = BST_Insert(root->right, value_to_add);
-    }
-    return root;
-}
 
-bool BST_Search(BSTNode* root, int value_to_find) {
-    if (root == NULL)
-        return false;
-    else if (value_to_find == root->value)
-        return true;
-    else if (value_to_find < root->value)
-        return BST_Search(root->left, value_to_find);
-    else  //(value_to_find > root->value)
-        return BST_Search(root->right, value_to_find);
-}
 
-BSTNode* BST_Min(BSTNode* root) {
-    if (root == NULL) {
+BSTNode* BST_Min(BST tree) {
+    if (tree.root == NULL)
         return NULL;
+    while (tree.root->left != NULL) {
+        tree.root = tree.root->left;
     }
-    while (root->left != NULL) {
-        root = root->left;
-    }
-    return root;
+        return tree.root;
 }
 
-int BST_Max(BSTNode* root) {
-    if (root == NULL) {
-        return -1;
+BSTNode* BST_Max(BST tree) {
+    if (tree.root == NULL)
+        return NULL;
+    while (tree.root->right != NULL) {
+        tree.root = tree.root->right;
     }
-    while (root->right != NULL) {
-        root = root->right;
-    }
-    return root->value;
+    return tree.root;
 }
 
+// Height = number of edges between node and root
 int BST_Height(BSTNode* root) {
     if (root == NULL)
         return -1;    
     return std::max(BST_Height(root->left), BST_Height(root->right)) + 1;
 }
-
-bool IsBstUtil(BSTNode *root, int min, int max) {
-    // Doesn't handle duplicates
-    if (root == NULL) return true;
-
-    if (root->value > min &&
-        root->value < max &&
-        IsBstUtil(root->left, min, root->value) &&
-        IsBstUtil(root->right, root->value, max))
-        return true;
-    else
-        return false;
-}
-
-bool is_BST(BSTNode *root) {
-    return IsBstUtil(root, INT_MIN, INT_MAX);
-}
-// END OF MYCODESCHOOL
-
 
 int BST_NodeCount(BSTNode* root) {
     int count = 0;
@@ -98,9 +56,6 @@ int BST_NodeCount(BSTNode* root) {
     else
         return count;
 }
-
-
-
 
 BSTNode* BST_Add(BST* tree, int value_to_add) {
     if (tree->root == NULL) {
@@ -141,54 +96,10 @@ BSTNode* BST_Add(BST* tree, int value_to_add) {
     }
 }
 
-BSTNode* BST_Find(BST* tree, int value_to_find) {
-    BSTNode* cursor = tree->root;
-    while (cursor != NULL) {
-        if (value_to_find < cursor->value)
-            cursor = cursor->left;
-        else if (value_to_find > cursor->value)
-            cursor = cursor->right;
-        else
-            return cursor;
-    }
-    return NULL; // Not Found
-}
-                    
-
-BSTNode* MCS_Delete(BSTNode *root, int value) {
-    if (root == NULL) return root;
-    else if (value < root->value) root->left = MCS_Delete(root->left, value);
-    else if (value > root->value) root->right = MCS_Delete(root->right, value);
-    else    // Found Node
-    {
-        // Case: No Child
-        if (root->left == NULL && root->right == NULL) {
-            delete root;
-            root = NULL;
-        }
-        else if (root->left == NULL) {
-            BSTNode *temp = root;
-            root = root->right;
-            delete temp;
-        }
-        else if (root->right == NULL) {
-            BSTNode *temp = root;
-            root = root->left;
-            delete temp;
-        }
-        else {
-            BSTNode *temp = BST_Min(root->right);
-            root->value = temp->value;
-            root->right = MCS_Delete(root->right, temp->value);
-        }
-        return root;
-    }
-}
-
 bool BST_Delete(BST* tree, int value_to_delete) {
     BSTNode* node_to_delete = BST_Find(tree, value_to_delete);  // get node_to_delete to val_to_delete
     if (node_to_delete != NULL) {                               // val actually found
-        // to_delete has two children
+                                                                // to_delete has two children
         if (node_to_delete->left != NULL &&
             node_to_delete->right != NULL) {
             // Find smallest value in right subtree            
@@ -237,20 +148,51 @@ bool BST_Delete(BST* tree, int value_to_delete) {
             /* Old code
             node_to_delete = node_to_delete->parent;
             if (value_to_delete < node_to_delete->value) {
-                free(node_to_delete->left);
-                node_to_delete->left = NULL;
-                return node_to_delete;
+            free(node_to_delete->left);
+            node_to_delete->left = NULL;
+            return node_to_delete;
             }
             else {
-                free(node_to_delete->right);
-                node_to_delete->right = NULL;
-                return node_to_delete;
-            }*/   
+            free(node_to_delete->right);
+            node_to_delete->right = NULL;
+            return node_to_delete;
+            }*/
         }
     }
     else {
         // Value not in tree.
         return false;
+    }
+}
+
+BSTNode* BST_Find(BST* tree, int value_to_find) {
+    BSTNode* cursor = tree->root;
+    while (cursor != NULL) {
+        if (value_to_find < cursor->value)
+            cursor = cursor->left;
+        else if (value_to_find > cursor->value)
+            cursor = cursor->right;
+        else
+            return cursor;
+    }
+    return NULL; // Not Found
+}
+
+BSTNode* BST_InOrderPredecessor(BST* tree, int value) {
+    BSTNode *current = BST_Find(tree, value);
+
+    if (current == NULL)
+        return NULL;
+    if (current->left != NULL) {
+        return current->left; // TODO: Differs from MCS
+    }
+    else {
+        BSTNode* parent = current->parent;
+        while (parent != NULL && current == parent->left) {
+            current = parent;
+            parent = parent->parent;
+        }
+        return parent;
     }
 }
 
@@ -272,9 +214,8 @@ void BST_Print_LevelOrder(BST* tree) {
             }
         }
         printf("\n");
-    }    
+    }
 }
-
 void BST_Print_PreOrder(BSTNode* root) {
     if (root != NULL) {
         printf("%d ", root->value);
@@ -282,7 +223,6 @@ void BST_Print_PreOrder(BSTNode* root) {
         BST_Print_PreOrder(root->right);
     }
 }
-
 void BST_Print_InOrder(BSTNode* root) {
     if (root != NULL) {
         BST_Print_InOrder(root->left);
@@ -290,7 +230,6 @@ void BST_Print_InOrder(BSTNode* root) {
         BST_Print_InOrder(root->right);
     }
 }
-
 void BST_Print_PostOrder(BSTNode* root) {
     if (root != NULL) {
         BST_Print_PostOrder(root->left);
@@ -298,3 +237,120 @@ void BST_Print_PostOrder(BSTNode* root) {
         printf("%d ", root->value);
     }
 }
+
+// MYCODESCHOOL (Mostly recursion)
+// https://www.youtube.com/watch?v=COZK7NATh4k&list=PL2_aWCzGMAwI3W_JlcBbtYTwiQSsOTa6P&index=28
+
+BSTNode* MCS_Min(BSTNode* root) {
+    if (root == NULL)
+        return NULL;
+    while (root->left != NULL) {
+        root = root->left;
+    }
+    return root;
+}
+BSTNode* MCS_Max(BSTNode* root) {
+    if (root == NULL) return NULL;
+
+    while (root->right != NULL) {
+        root = root->right;
+    }
+    return root;
+}
+
+BSTNode* MCS_Insert(BSTNode* root, int value_to_add) {
+    if (root == NULL) {
+        root = NewBstNode(NULL, value_to_add);
+        return root;
+    }
+    else if (value_to_add <= root->value) {
+        root->left = MCS_Insert(root->left, value_to_add);
+    }
+    else {
+        root->right = MCS_Insert(root->right, value_to_add);
+    }
+    return root;
+}
+bool     MCS_Search(BSTNode* root, int value_to_find) {
+    if (root == NULL)
+        return false;
+    else if (value_to_find == root->value)
+        return true;
+    else if (value_to_find < root->value)
+        return MCS_Search(root->left, value_to_find);
+    else  //(value_to_find > root->value)
+        return MCS_Search(root->right, value_to_find);
+}
+BSTNode* MCS_Delete(BSTNode* root, int value) {
+    if (root == NULL) return root;
+    else if (value < root->value) root->left = MCS_Delete(root->left, value);
+    else if (value > root->value) root->right = MCS_Delete(root->right, value);
+    else    // Found Node
+    {
+        // Case: No Child
+        if (root->left == NULL && root->right == NULL) {
+            delete root;
+            root = NULL;
+        }
+        else if (root->left == NULL) {
+            BSTNode *temp = root;
+            root = root->right;
+            delete temp;
+        }
+        else if (root->right == NULL) {
+            BSTNode *temp = root;
+            root = root->left;
+            delete temp;
+        }
+        else {
+            BSTNode *temp = MCS_Min(root->right);
+            root->value = temp->value;
+            root->right = MCS_Delete(root->right, temp->value);
+        }
+        return root;
+    }
+}
+
+bool MCS_BstUtil(BSTNode* root, int min, int max) {
+    // Doesn't handle duplicates
+    if (root == NULL) return true;
+
+    if (root->value > min &&
+        root->value < max &&
+        MCS_BstUtil(root->left, min, root->value) &&
+        MCS_BstUtil(root->right, root->value, max))
+        return true;
+    else
+        return false;
+}
+bool MCS_isBST(BSTNode* root) {
+    return MCS_BstUtil(root, INT_MIN, INT_MAX);
+}
+
+BSTNode* MCS_Successor(BST* tree, int value) {
+    // Ben: Modified to use tree instead of root node source.
+    // Ben: Algorithm doesn't use parent pointers.
+    // Find the node: O(h)
+    BSTNode* current = BST_Find(tree, value);
+    if (current == NULL) return NULL;
+    // Case 1: Node has right subtree
+    if (current->right != NULL) {       // O(h)
+        return MCS_Min(current->right); // Min in right subtree
+    }
+    // Case 2: No right subtree
+    else {
+        BSTNode* successor = NULL;
+        BSTNode* ancestor = tree->root;
+        while (ancestor != current) {
+            if (current->value < ancestor->value) {
+                successor = ancestor;
+                ancestor = ancestor->left;
+            }
+            else {
+                ancestor = ancestor->right;
+            }
+        }
+        return successor;
+    }
+}
+// END OF MYCODESCHOOL

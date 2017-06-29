@@ -1,4 +1,5 @@
-#include "tree.h"
+/*
+
 //#include <queue>
 using namespace std;
 
@@ -169,3 +170,5 @@ template<typename T>   TreeNode<T> BinaryTree<T>::Add(T toAdd) {
 //}
 
 #endif
+
+*/

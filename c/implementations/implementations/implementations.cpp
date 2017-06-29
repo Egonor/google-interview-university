@@ -13,7 +13,6 @@ int main()
 
 #pragma region Binary Search Tree Tests
     /*
-    BST tree;
         0
         5
        / \
@@ -21,41 +20,77 @@ int main()
         \  \
         4   8
        /   / \
-      3   7   9      
+      3   7   9    
+    */
 
-    // root
+    BST tree;
     BST_Add(&tree, 5);    
-    BST_Add(&tree, 2);    // test right child only (delete 2)
-    BST_Add(&tree, 4);    // test left child only (delete 4)
+    BST_Add(&tree, 2);    // test DELETE w/ right child only
+    BST_Add(&tree, 4);    // test DELETE w/ left child only
     BST_Add(&tree, 3);
-    // for both children
     BST_Add(&tree, 6);
-    BST_Add(&tree, 8);
+    BST_Add(&tree, 8);    // test DELETE w/ both children
     BST_Add(&tree, 7);
-    BST_Add(&tree, 9);    // test both children (delete 8)
+    BST_Add(&tree, 9);
+    BST_Print_InOrder(tree.root);   // Print Initial Tree
 
-    PrintTree(&tree);
-    DeleteFromTree(&tree, 2);   // test right child only (delete 2)
-    PrintTree(&tree);
-    DeleteFromTree(&tree, 4);   // test left child only (delete 4)
-    PrintTree(&tree);
-    DeleteFromTree(&tree, 8);
-    PrintTree(&tree);   
-    */
+    printf("\nMin: %d", BST_Min(tree)->value);      // MIN should == 2
+    printf("\nMax: %d", BST_Max(tree)->value);      // MAX should == 9
+    printf("\nHeight: %d", BST_Height(tree.root));  // HEIGHT should == 3
+    printf("\nNode Count: %d", BST_NodeCount(tree.root)); // COUNT should == 8
+
+    printf(BST_Find(&tree, 3) ? "\n3 Found" : "\n3 Not Found");
+    printf(BST_Find(&tree, 10) ? "\n10 Found" : "\n10 Not Found");
+    //printf("\n");
+    printf("%d ", BST_InOrderPredecessor(&tree, 3)->value); // parent's parent
+    printf("%d ", BST_InOrderPredecessor(&tree, 4)); // parent's parent
+    printf("%d ", BST_InOrderPredecessor(&tree, 5)); // right child
+    printf("%d ", BST_InOrderPredecessor(&tree, 6)); // parent's parent
+    printf("%d ", BST_InOrderPredecessor(&tree, 7)); // parent
+    printf("%d ", BST_InOrderPredecessor(&tree, 8)); // left child
+    printf("%d ", BST_InOrderPredecessor(&tree, 9)); // parent
+
+    BST_Delete(&tree, 2);   // test right child only (delete 2)
+    printf("\n");
+    BST_Print_InOrder(tree.root);
+
+    BST_Delete(&tree, 4);   // test left child only (delete 4)
+    printf("\n");
+    BST_Print_InOrder(tree.root);
+
+    BST_Delete(&tree, 8);   // moves 9 up (smallest in right subtree)
+                            // can do largest in left subtree too
+    printf("\n");
+    BST_Print_InOrder(tree.root);
+
+    printf("%d", BST_Min(tree)->value);
 
 
-    BST root;
-    BST_Add(&root, 5);
-    BST_Print_LevelOrder(&root);
+    BST MCS;
+    //TODO: Debug this bullshit
+    MCS_Insert(MCS.root, 5);
+    MCS_Insert(MCS.root, 2);
+    MCS_Insert(MCS.root, 4);
+    MCS_Insert(MCS.root, 3);
+    MCS_Insert(MCS.root, 6);
+    MCS_Insert(MCS.root, 8);
+    MCS_Insert(MCS.root, 7);
+    MCS_Insert(MCS.root, 9);
+            
+    BST_Print_InOrder(MCS.root);
     
-    /*
-    BinaryTree<int> tree(5);// = new BinaryTree<int>(5);// = new BinaryTree<int>(1, NULL);
-    tree.Add(1);
-    tree.Add(3);
-    tree.Add(6);
-    tree.Add(7);
-    tree.Add(9);
-    */
+    //printf("\nSuccessor to 1: %d", MCS_Successor(&tree, 1)->value); // exception...
+    printf("\nSuccessor to 2: %d", MCS_Successor(&tree, 2)->value);
+    printf("\nSuccessor to 3: %d", MCS_Successor(&tree, 3)->value);
+    printf("\nSuccessor to 4: %d", MCS_Successor(&tree, 4)->value);
+    printf("\nSuccessor to 5: %d", MCS_Successor(&tree, 5)->value);
+    printf("\nSuccessor to 6: %d", MCS_Successor(&tree, 6)->value);
+    printf("\nSuccessor to 7: %d", MCS_Successor(&tree, 7)->value);
+    printf("\nSuccessor to 8: %d", MCS_Successor(&tree, 8)->value);
+    printf("\nSuccessor to 9: %d", MCS_Successor(&tree, 7)->value); // returns 8...
+
+    printf("%d ", BST_InOrderPredecessor(&tree, 2)->value); // null
+
 #pragma endregion
 
 #pragma region GenericVector (template) Tests
