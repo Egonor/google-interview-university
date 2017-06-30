@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "bst.h"
 
-// TODO: Reimplement/Cleanup. My code uses Tree, MCS uses root.
-//       Either way is fine but using both together is confusing/cumbersome.
 
 // Helper function to create a new node...
 // malloc(sizeof(struct BSTNode)
@@ -18,7 +16,7 @@ BSTNode* NewBstNode(BSTNode* parent, int value) {
 }
 
 
-
+// BST_Min/Max is Min/Max of Tree, not from a node (see BST_InOrderPredecessor)
 BSTNode* BST_Min(BST tree) {
     if (tree.root == NULL)
         return NULL;
@@ -27,7 +25,6 @@ BSTNode* BST_Min(BST tree) {
     }
         return tree.root;
 }
-
 BSTNode* BST_Max(BST tree) {
     if (tree.root == NULL)
         return NULL;
@@ -178,13 +175,14 @@ BSTNode* BST_Find(BST* tree, int value_to_find) {
     return NULL; // Not Found
 }
 
+// Need MCS_Min/Max because it works (finds min/max) from any node in the tree).
 BSTNode* BST_InOrderPredecessor(BST* tree, int value) {
     BSTNode *current = BST_Find(tree, value);
 
     if (current == NULL)
         return NULL;
     if (current->left != NULL) {
-        return current->left; // TODO: Differs from MCS
+        return MCS_Max(current->left); // TODO: rewrite to handle BST
     }
     else {
         BSTNode* parent = current->parent;

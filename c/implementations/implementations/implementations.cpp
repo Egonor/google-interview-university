@@ -41,14 +41,34 @@ int main()
 
     printf(BST_Find(&tree, 3) ? "\n3 Found" : "\n3 Not Found");
     printf(BST_Find(&tree, 10) ? "\n10 Found" : "\n10 Not Found");
-    //printf("\n");
-    printf("%d ", BST_InOrderPredecessor(&tree, 3)->value); // parent's parent
-    printf("%d ", BST_InOrderPredecessor(&tree, 4)); // parent's parent
-    printf("%d ", BST_InOrderPredecessor(&tree, 5)); // right child
-    printf("%d ", BST_InOrderPredecessor(&tree, 6)); // parent's parent
-    printf("%d ", BST_InOrderPredecessor(&tree, 7)); // parent
-    printf("%d ", BST_InOrderPredecessor(&tree, 8)); // left child
-    printf("%d ", BST_InOrderPredecessor(&tree, 9)); // parent
+    
+    printf("\n");
+    // Doesn't handle NULL: access violation = return int instead of BSTNode*
+    // printf("\nPre(100): %d", BST_InOrderPredecessor(&tree, 100)->value);
+    printf("\nPre(3): %d", BST_InOrderPredecessor(&tree, 3)->value); // parent's parent
+    printf("\nPre(4): %d", BST_InOrderPredecessor(&tree, 4)->value); // parent's parent
+    printf("\nPre(5): %d", BST_InOrderPredecessor(&tree, 5)->value); // right child
+    printf("\nPre(6): %d", BST_InOrderPredecessor(&tree, 6)->value); // parent's parent
+    printf("\nPre(7): %d", BST_InOrderPredecessor(&tree, 7)->value); // parent
+    printf("\nPre(8): %d", BST_InOrderPredecessor(&tree, 8)->value); // left child
+    printf("\nPre(9): %d", BST_InOrderPredecessor(&tree, 9)->value); // parent
+
+    
+    printf("\nSuc(2): %d", MCS_Successor(&tree, 2)->value);
+    printf("\nSuc(3): %d", MCS_Successor(&tree, 3)->value);
+    printf("\nSuc(4): %d", MCS_Successor(&tree, 4)->value);
+    printf("\nSuc(5): %d", MCS_Successor(&tree, 5)->value);
+    printf("\nSuc(6): %d", MCS_Successor(&tree, 6)->value);
+    printf("\nSuc(7): %d", MCS_Successor(&tree, 7)->value);
+    printf("\nSuc(8): %d", MCS_Successor(&tree, 8)->value);
+    printf("\nSuc(9): %d", MCS_Successor(&tree, 9)->value);
+    
+    printf("\n");
+    BST_Print_LevelOrder(&tree);        // 5, 2, 6, 4, 8, 3, 7, 9
+    printf("\n");
+    BST_Print_PreOrder(tree.root);      // 5, 2, 4, 3, 6, 8, 7, 9
+    printf("\n");
+    BST_Print_PostOrder(tree.root);     // 3, 4, 2, 7, 9, 8, 6, 5
 
     BST_Delete(&tree, 2);   // test right child only (delete 2)
     printf("\n");
@@ -62,8 +82,7 @@ int main()
                             // can do largest in left subtree too
     printf("\n");
     BST_Print_InOrder(tree.root);
-
-    printf("%d", BST_Min(tree)->value);
+    
 
 
     BST MCS;
