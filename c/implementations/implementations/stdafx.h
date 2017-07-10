@@ -21,6 +21,7 @@
 #include <queue>        // Level-Order Traversal of Binary Tree
 #include <list>         // Level-Order Traversal of Binary Tree
 #include <algorithm>>   // bst.ccp: max()
+#include <iostream>     // cout <<
 
 
 typedef int8_t i8;		// BYTE

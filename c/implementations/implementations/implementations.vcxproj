@@ -142,6 +142,7 @@
     <ClInclude Include="bst.h" />
     <ClInclude Include="dictionary.h" />
     <ClInclude Include="GenericVector.h" />
+    <ClInclude Include="Heap.h" />
     <ClInclude Include="linkedlist.h" />
     <ClInclude Include="queue.h" />
     <ClInclude Include="stdafx.h" />

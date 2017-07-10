@@ -6,10 +6,39 @@
 #include "GenericVector.h"
 #include "BinaryTree.h"
 #include "bst.h"
+#include "Heap.h"
 
 
 int main()
 {
+#pragma region Heap Tests
+    // https://stackoverflow.com/questions/22146094/why-should-i-use-a-pointer-rather-than-the-object-itself
+    // this is Dynamic Allocation (must delete manually)
+    // Automatic Allocation, eg. "Heap h;" deletes on scope exit
+    // I assume data structures should probably allow dynamic allocation.
+
+    // TODO: Test Heap
+
+    std::vector<int> list;
+    for (int i = 5; i < 8 + 5; ++i) {
+        // push 5-12 (13-1)
+        list.push_back(i);
+    }
+    //BuildMaxHeap(list);
+    printf("\n");
+
+    Heap *h = new Heap();
+    // But this has no default constructor...must have initialSize
+    // TODO: How do I auto-alloc with a non-default constructor?
+
+    printf("Size: %d\n", h->GetSize());
+    printf(h->IsEmpty() ? "Empty: true\n" : "Empty: false\n");
+    printf("Root/Max: %d", h->GetMax());
+
+
+    delete h;
+    //delete list;
+#pragma endregion
 
 #pragma region Binary Search Tree Tests
     /*
@@ -20,8 +49,7 @@ int main()
         \  \
         4   8
        /   / \
-      3   7   9    
-    */
+      3   7   9   
 
     BST tree;
     BST_Add(&tree, 5);    
@@ -110,6 +138,7 @@ int main()
 
     printf("%d ", BST_InOrderPredecessor(&tree, 2)->value); // null
 
+    */
 #pragma endregion
 
 #pragma region GenericVector (template) Tests
@@ -407,4 +436,5 @@ int main()
 #pragma endregion
 	
 	printf("End...");
+    return 0;
 }
