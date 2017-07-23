@@ -38,7 +38,7 @@ public:
     void Remove(T value);				// remove any indexes containing value
 
     u32 Find(T value);			    	// return first index of value	
-
+    
     int BinarySearch(int value);        // Binary search the GenericVector
     int BinarySearchR(int value, int min, int max);       // Binary search using recursion
                                                           // bool operator == (const Pair<T1, T2& Other) const {}
@@ -170,6 +170,7 @@ u32 GenericVector<T>::Find(T value) {
 }
 
 // INT ONLY
+// NOTE: Should only work on sorted arrays.
 template<>
 int GenericVector<int>::BinarySearch(int value) {
     int max = size;

@@ -7,10 +7,36 @@
 #include "BinaryTree.h"
 #include "bst.h"
 #include "Heap.h"
-
+#include "sorting.h"
+#include "printers.h"
 
 int main()
 {
+#pragma region Sorting Tests
+    // Setup Vector for tests && Print
+    int arr[] = { 20, 32, 9, 15, 68, 12, 45, 90, 76, 300, 43, 2, 91, 26 };
+    //vector<int> vec(arr, arr + sizeof(arr) / sizeof(arr[0]) );
+    std::vector<int> *vec = new std::vector<int>();
+    for (int i = 0; i < sizeof(arr) / sizeof(int); ++i) {
+        vec->push_back(arr[i]);
+    }
+    print(*vec);
+
+    // Sort && Print
+    //InsertionSort(vec);               // Works!
+    //BubbleSort(vec);                  // Works!
+    //SelectionSort(vec);               // Works!
+
+    *vec = MergeSort(*vec);             // Works! TODO: Make this all pointers.
+    print(*vec);
+
+
+    
+    int pause;
+
+#pragma endregion
+
+
 #pragma region Heap Tests
     // https://stackoverflow.com/questions/22146094/why-should-i-use-a-pointer-rather-than-the-object-itself
     // this is Dynamic Allocation (must delete manually)
