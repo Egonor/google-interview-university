@@ -20,6 +20,7 @@ int main()
     for (int i = 0; i < sizeof(arr) / sizeof(int); ++i) {
         vec->push_back(arr[i]);
     }
+    printf("\nUnsorted: ");
     print(*vec);
 
     // Sort && Print
@@ -27,13 +28,16 @@ int main()
     //BubbleSort(vec);                  // Works!
     //SelectionSort(vec);               // Works!
 
-    *vec = MergeSort(*vec);             // Works! TODO: Make this all pointers.
+    //*vec = MergeSort(*vec);           // Works! TODO: Make this all pointers.
+    QuickSort(vec, 0, vec->size() - 1); // Works!
+    printf("\nSorted(vec): ");
     print(*vec);
-
-
     
-    int pause;
+    QuickSort(arr, 0, 13);              // Works!
+    printf("\nSorted(arr): ");
+    print(arr, 14);
 
+    // TODO: Radix Sort?
 #pragma endregion
 
 

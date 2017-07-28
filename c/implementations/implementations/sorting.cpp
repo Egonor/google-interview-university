@@ -53,52 +53,119 @@ void SelectionSort(std::vector<int> * to_sort) {
     }
 }
 
-// O(log n)
-// Initial size should be to_sort.size()
-std::vector<int> * QuickSort(std::vector<int> * to_sort, int size) {
-    if (size < 2) {
-        return;
+int PartitionA(std::vector<int> *to_sort, int left, int right) {
+    // Partitioning
+    while (left != right) {
+        while (to_sort->at(left) < to_sort->at(right) && left != right) {
+            left++;
+        }
+        Swap(to_sort, left, right);
+        while (to_sort->at(left) < to_sort->at(right) && left != right) {
+            right--;
+        }
+        Swap(to_sort, left, right);
     }
+    return left;
+};
 
-    int pivot = to_sort->at(rand() % to_sort->size()); // random pivot
+int PartitionB(std::vector<int> *to_sort, int left, int right) {
+    int pivot = to_sort->at(left);
 
-    // These are both indexes
-    int low = 0;
-    int high = to_sort->size() - 1;    
-
-    while (low < high) {
-        while (to_sort->at(low)  < pivot) { low++;  }
-        while (to_sort->at(high) > pivot) { high++; }
-        Swap(to_sort, low, high);
+    while (left != right) {
+        while (to_sort->at(right) > pivot && left != right) {
+            right--;
+        }
+        to_sort->at(left) = to_sort->at(right);
+        while (to_sort->at(left) < pivot && left != right) {
+            left++;
+        }
+        to_sort->at(right) = to_sort->at(left);
     }
-    QuickSort(to_sort, low);
-    QuickSort(to_sort + 1, size - low - 1);
+    to_sort->at(left) = pivot;
+    return left;
 }
 
-int * QuickSort(int *to_sort, int size) {
-    if (size < 2) {
-        return to_sort;
-    }
-    else {
-        int pivot = to_sort[0];
-        int *less;
-        int *greater;
-        int less_size = 0;
-        int greater_size = 0;
-        for (int i = 1; i < size; ++i) {
-            if (to_sort[i] <= pivot) {
-                less[less_size] = pivot;
-                less_size++;
+int PartitionC(std::vector<int> *to_sort, int left, int right) {
+    int pivot = to_sort->at(left);
+
+    bool current_right = true;
+    while (left != right) {
+        if (current_right) {
+            if (to_sort->at(right) < pivot) {
+                to_sort->at(left) = to_sort->at(right);
+                left++;
+                current_right = false;
             }
-            else {
-                greater[greater_size] = pivot;
-                greater_size++;
+            else
+                right--;
+        }
+        else if (!current_right) {
+            if (to_sort->at(left) > pivot) {
+                to_sort->at(right) = to_sort->at(left);
+                right--;
+                current_right = true;
+            }
+            else
+                left++;
+        }
+    }
+    to_sort->at(left) = pivot; // left == right
+    return left;
+}
+
+
+// Average = 0(n log n), Worst = O(n^2)
+// Default min == 0, max == (vec->size() - 1)
+void QuickSort(std::vector<int> *to_sort, int min, int max) {
+    // TODO: Random Shuffle and setup QuickSort to just take an array as param.
+
+    if (min < max) {
+        int pivot_index = PartitionA(to_sort, min, max);
+        //int pivot_index = PartitionB(to_sort, min, max);
+        //int pivot_index = PartitionC(to_sort, min, max);
+        QuickSort(to_sort, min, pivot_index - 1);
+        QuickSort(to_sort, pivot_index + 1, max);
+    }
+}
+
+
+
+void QuickSort(int *to_sort, int min, int max) {
+    if (min < max) {
+        // Partition
+        int left = min;
+        int right = max;
+
+        int pivot = to_sort[left];
+
+        bool current_right = true;
+        while (left != right) {
+            if (current_right) {
+                if (to_sort[right] < pivot) {
+                    to_sort[left] = to_sort[right];
+                    left++;
+                    current_right = false;
+                }
+                else
+                    right--;
+            }
+            else if (!current_right) {
+                if (to_sort[left] > pivot) {
+                    to_sort[right] = to_sort[left];
+                    right--;
+                    current_right = true;
+                }
+                else
+                    left++;
             }
         }
-        //return QuickSort(less, less_size) + pivot + QuickSort(greater, greater_size);
-        return nullptr;
+
+        to_sort[left] = pivot; // left == right
+
+        QuickSort(to_sort, min, left - 1);
+        QuickSort(to_sort, right + 1, max);
     }
-};
+}
 
 
 

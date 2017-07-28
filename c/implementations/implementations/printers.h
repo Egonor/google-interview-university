@@ -17,6 +17,9 @@ template <typename T>
 void print(const std::list<T>& l) { print_container(l); }
 
 template <typename T>
+void print(const T *arr, int size) { print_arr(arr, size); }
+
+template <typename T>
 void print(const T& e) { cout << e; }
 
 template <typename T>
@@ -30,6 +33,20 @@ void print_container(const T& c) {
     }
     cout << "]\n";
 }
+
+
+template <typename T>
+void print_arr(const T *arr, int size) {
+    cout << "[";
+    bool isFirst = true;
+    for (int i = 0; i < size; ++i) {
+        if (isFirst) isFirst = false;
+        else cout << ", ";
+        cout << arr[i];
+    }
+    cout << "]\n";
+}
+
 
 /* My Implementation
 void print_vec(std::vector<int> *to_print) {

@@ -5,29 +5,25 @@
 #ifndef HEAP_H
 #define HEAP_H
 
+// Heaps are an array based data-structure that simulates a tree.
+// They can be defined as Max Heaps (max value at root) or Min Heaps.
+
+// HeapSort Complexity:
+//  Time:   O(n log n) where log n == height of tree
+//  Space:  O(1)
+
 class Heap {
 private:
     int size;
     int max_size;
     std::vector<int> *storage;
 
-    int Parent(int index) {
-        return index / 2;
-    }
-
-    int LeftChild(int index) {
-        return (2 * index) + 1; // +1 is necessary for 0 based array
-    }
-
-    int RightChild(int index) {
-        return (2 * index) + 2; 
-    }
+    int Parent(int index)     { return index / 2; }
+    int LeftChild(int index)  { return (2 * index) + 1; } // +1 for 0 based arrays
+    int RightChild(int index) { return (2 * index) + 2; }
 
     void Swap(int indexA, int indexB) {
-        //int to_swap = (*storage)[index_to_swap];
-        //(* storage)[parent_index] = (* storage)[index];
-        //(* storage)[index] = to_swap;
-        
+        // Doesn't fix Heap, just swaps values
         int temp = storage->at(indexA);
         storage->at(indexA) = storage->at(indexB);
         storage->at(indexB) = temp;
