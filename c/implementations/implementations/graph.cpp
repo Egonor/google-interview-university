@@ -82,7 +82,8 @@ void GraphList::AddEdge(char node_from, char node_to, int weight) {
         for (std::list<graph_edge>::iterator it = nodes.at(node_index).edges.begin(); 
                 it != nodes.at(node_index).edges.end(); ++it) {
             if (it->index_to == edge_to) {
-                printf("Error: Edge already found, cannot re-add.\n");
+                printf("Error: Edge %c->%c already found, cannot re-add.\n",
+                         node_from, node_to);
                 return;
             }
             /* NOTE: Does std::list<> use a tail pointer?  Is it 0(1) to
@@ -204,17 +205,18 @@ void GraphList::MinimumSpanningTree() {
 
     sorted_edges.sort(WeightComparator);
 
-    
+    // TODO: The edge storage logic is broken.  I need to Find(A) != Find(B)
+    //       aka at a given edge (like A->B) is node A in the same set as B
 
     // Setup parent array 0(n)
     UnionFind parent_array;
     for (int i = 0; i < nodes.size(); ++i) {
-        parent_array
+        parent_array.AddItem(i, nodes.at(i).name);
     }
 
 
     for (int i = 0; i < sorted_edges.size(); ++i) {
-
+        //if (!parent_array.Find())
     }
 
 

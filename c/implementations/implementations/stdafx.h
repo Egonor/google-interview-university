@@ -23,6 +23,12 @@
 #include <algorithm>>   // bst.ccp: max()
 #include <iostream>     // cout <<
 
+// https://stackoverflow.com/questions/1941307/c-debug-print-macros
+#ifdef _DEBUG
+# define DEBUG_PRINT(x) printf x
+#else
+# define DEBUG_PRINT(x) do {} while (0)
+#endif
 
 typedef int8_t i8;		// BYTE
 typedef int16_t i16;	// WORD

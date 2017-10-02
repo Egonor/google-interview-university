@@ -5,21 +5,21 @@
 #ifndef UNIONFIND_H
 #define UNIONFIND_H
 
-template <typename T>
 struct Item {
     int parent;
-    T value;
+    char value;
     int height;
 };
 
-template <class T>
 class UnionFind {
 private:
-    std::vector<typename Item> items;
+    std::vector<Item> items;
 
 public:
-    template <class t>
-    UnionFind(std::vector<T> input_vector) {
+    UnionFind() {};
+    ~UnionFind() {};
+
+    UnionFind(std::vector<char> input_vector) {
         for (int i = 0; i < input_vector.size(); ++i) {
             Item item;
             item.parent = i;
@@ -29,19 +29,23 @@ public:
         }
     };
 
-    ~UnionFind() {
+    void AddItem(int parent, char value);
 
-    };
-
-
-    int Find(typename Item item);
-    void Union(typename Item a, typename Item b);
+    int Find(Item item);
+    void Union(int a, int b);
 };
+
+void UnionFind::AddItem(int parent, char value) {
+    Item temp;
+    temp.parent = parent;
+    temp.value = value;
+    temp.height = 1;
+    items.push_back(temp);
+}
 
 
 // returns the index of the requested value
-template <typename T>
-int UnionFind::Find(typename Item item) {
+int UnionFind::Find(Item item) {
     std::vector<int> to_move;
 
     int current = item.parent;
@@ -61,9 +65,9 @@ int UnionFind::Find(typename Item item) {
     return current;
 }
 
-template <typename T>
-void UnionFind::Union(Item a, Item b) {
-
+void UnionFind::Union(int a, int b) {
+    Item A = items.at(a);
+    Item B = items.at(b);
 }
 
 

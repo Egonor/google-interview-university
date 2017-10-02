@@ -9,9 +9,53 @@
 #include "Heap.h"
 #include "sorting.h"
 #include "printers.h"
+#include "graph.h"
 
 int main()
 {
+#pragma region Graph Tests
+    GraphList g;
+    g.directed = false;
+    g.AddNode('A');
+    g.AddNode('B');
+    g.AddNode('C');
+    g.AddNode('D');
+    g.AddNode('E');
+    g.AddNode('F');
+    g.AddNode('G');
+
+    g.AddEdge('A', 'B', 1);
+    g.AddEdge('A', 'D', 2);
+    g.AddEdge('A', 'F', 2);
+    
+    g.AddEdge('B', 'D', 2);
+    g.AddEdge('B', 'C', 1);
+
+    g.AddEdge('C', 'D', 1);
+    g.AddEdge('C', 'E', 3);
+    
+    g.AddEdge('E', 'D', 2);
+    g.AddEdge('E', 'G', 1);
+    
+    g.AddEdge('G', 'D', 3);
+    g.AddEdge('G', 'F', 3);
+
+    g.AddEdge('F', 'D', 1);
+
+
+    g.PrintGraph();
+
+    //g.TopologicalSort();
+    g.MinimumSpanningTree();
+
+    printf("Hold...");
+
+
+
+#pragma endregion
+
+
+
 #pragma region Sorting Tests
     // Setup Vector for tests && Print
     int arr[] = { 20, 32, 9, 15, 68, 12, 45, 90, 76, 300, 43, 2, 91, 26 };

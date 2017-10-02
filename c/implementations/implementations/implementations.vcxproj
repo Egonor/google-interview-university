@@ -142,6 +142,7 @@
     <ClInclude Include="bst.h" />
     <ClInclude Include="dictionary.h" />
     <ClInclude Include="GenericVector.h" />
+    <ClInclude Include="graph.h" />
     <ClInclude Include="Heap.h" />
     <ClInclude Include="linkedlist.h" />
     <ClInclude Include="printers.h" />
@@ -149,11 +150,13 @@
     <ClInclude Include="sorting.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="UnionFind.h" />
     <ClInclude Include="vector.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bst.cpp" />
     <ClCompile Include="dictionary.cpp" />
+    <ClCompile Include="graph.cpp" />
     <ClCompile Include="implementations.cpp" />
     <ClCompile Include="linkedlist.cpp" />
     <ClCompile Include="queue.cpp" />
