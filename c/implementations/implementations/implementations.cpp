@@ -15,6 +15,8 @@ int main()
 {
 #pragma region Graph Tests
     GraphList g;
+
+    /* Miniumum Spanning Tree Graph
     g.directed = false;
     g.AddNode('A');
     g.AddNode('B');
@@ -41,12 +43,38 @@ int main()
     g.AddEdge('G', 'F', 3);
 
     g.AddEdge('F', 'D', 1);
+    */
 
+    g.directed = true;
+    g.AddNode('A');
+    g.AddNode('B');
+    g.AddNode('C');
+    g.AddNode('D');
+    g.AddNode('E');
+    g.AddNode('F');
+    g.AddNode('G');
 
-    g.PrintGraph();
+    g.AddEdge('A', 'B', 1);
+    g.AddEdge('B', 'C', 1);
+    g.AddEdge('C', 'A', 1);
+    g.AddEdge('C', 'E', 1);
+    g.AddEdge('E', 'D', 1);
+    g.AddEdge('D', 'G', 1);
+    g.AddEdge('G', 'F', 1);
+    g.AddEdge('F', 'D', 1);
+    //g.AddEdge('B', 'F', 1);
+    //g.AddEdge('B', 'E', 1);
+    
 
     //g.TopologicalSort();
-    g.MinimumSpanningTree();
+    std::vector<graph_edge> v_minspantree = g.MinimumSpanningTree();
+
+    g.BFS(0); // Starts at node A (Should be an indegree 0 node in Undirected).
+    std::vector<graph_node*> v_dfs = g.DFS(0);
+    g.PrintGraph();
+
+    g.StronglyConnectedComponents();
+        
 
     printf("Hold...");
 
@@ -54,9 +82,8 @@ int main()
 
 #pragma endregion
 
-
-
 #pragma region Sorting Tests
+    /*
     // Setup Vector for tests && Print
     int arr[] = { 20, 32, 9, 15, 68, 12, 45, 90, 76, 300, 43, 2, 91, 26 };
     //vector<int> vec(arr, arr + sizeof(arr) / sizeof(arr[0]) );
@@ -82,8 +109,8 @@ int main()
     print(arr, 14);
 
     // TODO: Radix Sort?
+    */
 #pragma endregion
-
 
 #pragma region Heap Tests
     // https://stackoverflow.com/questions/22146094/why-should-i-use-a-pointer-rather-than-the-object-itself

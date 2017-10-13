@@ -102,8 +102,7 @@ int LinkedList::AccessFromEnd(int n) {
 	if (n > 0 && n < size)
 		return Access(size - 1 - n);
 	else
-		throw std::out_of_range(
-			"AccessFromEnd(int n), n must be a positive integer, less than sizeof(List)");
+		throw std::out_of_range("AccessFromEnd(int n), n must be a positive integer, less than sizeof(List)");
 }
 
 void LinkedList::PushFront(int value) {
