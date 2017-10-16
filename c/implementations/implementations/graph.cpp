@@ -12,9 +12,7 @@
 // TODO: DFS with adjacency matrix(iterative with stack)
 // TODO: BFS with adjacency matrix
 
-// TODO: single-source shortest path (Dijkstra)
 // TODO: DFS - based algorithms(see Aduni videos above) :
-            // list strongly connected components
             // check for bipartite graph
 
 
@@ -228,10 +226,9 @@ std::vector<graph_edge> GraphList::MinimumSpanningTree() {
     // Setup parent array 0(n)
     UnionFind parent_array(nodes.size());
 
-// TODO: I hate this implementation.
-//  Union-Find is only to check for cycles. Weighted/PathComp the UnionFind makes it
-//      unable to store an actual spanning tree (eg. actual parent references)
-//  And the way I'm storing and manipulating "graph_edge"s doesn't seem pure.
+//  Union-Find is only to check for cycles. Weighted/PathComping the UnionFind
+//      makes it unable to store a spanning tree (eg. actual parent references)
+//  And the way I'm storing and manipulating "graph_edge"s doesn't seem pure(?)
 //      Each graph_edge needs to hold its FROM value which makes this algorithm
 //      seem more suited for an adjacency matrix, but we still want it in 0(e)
     std::vector<graph_edge> spanning_tree;
@@ -405,7 +402,6 @@ GraphList GraphList::MakeReverseGraph() {
         for (edge = nodes.at(i).edges.begin();
                 edge != nodes.at(i).edges.end(); ++edge) {
             
-            //TODO: Edges are borked, need to figure out how to make them work
             graph_edge new_edge;
             new_edge.index_from = edge->index_to;
             new_edge.index_to = edge->index_from;
@@ -450,3 +446,55 @@ void GraphList::StronglyConnectedComponents() {
     //  MakeReverseGraph should probably be independent too, taking a GraphList
     //  as arguments and returning a reversed graph.
 }
+
+
+void GraphList::Scan(int node_index, std::vector<int>& distances, std::vector<int>& parents) {
+    // Loop over all connected edges (aka FIELD?)
+
+    for (std::list<graph_edge>::iterator edge = nodes.at(node_index).edges.begin();
+        edge != nodes.at(node_index).edges.end(); ++edge) {
+        // Check if current + new distance < field's known shortest distance
+        if (distances.at(node_index) + edge->weight < distances.at(edge->index_to)) {
+            // set if shorter
+            distances.at(edge->index_to) = distances.at(node_index) + edge->weight;
+            // set new parent
+            parents.at(edge->index_to) = node_index;
+        }
+    }
+
+}
+
+// 0(e log n) - Only positive weight edges
+ShortestPath GraphList::Dijkstra(int source_node) {
+    ShortestPath p;
+    p.source = source_node;
+    p.distances = std::vector<int>(nodes.size(), INT_MAX);
+    p.parents = std::vector<int>(nodes.size(), NULL);
+
+    p.distances.at(source_node) = 0;
+    
+
+    std::priority_queue<int, std::vector<int>, comparator> min_heap;
+    min_heap.push(source_node);
+
+    while (!min_heap.empty()) {
+        int u = min_heap.top();
+        min_heap.pop();
+
+        for (std::list<graph_edge>::iterator edge = nodes.at(u).edges.begin();
+            edge != nodes.at(u).edges.end(); ++edge) {
+            // Check if current + new distance < field's known shortest distance
+            if (p.distances.at(u) + edge->weight < p.distances.at(edge->index_to)) {
+                // set if shorter
+                p.distances.at(edge->index_to) = p.distances.at(u) + edge->weight;
+                // set new parent
+                p.parents.at(edge->index_to) = u;
+            }
+        }
+    }
+
+    return p;
+}
+
+// DAGs - Scan in Topological Order
+//      - Longest path in DAGS, change all edges to negative and find shortest path
