@@ -450,7 +450,6 @@ void GraphList::StronglyConnectedComponents() {
 
 void GraphList::Scan(int node_index, std::vector<int>& distances, std::vector<int>& parents) {
     // Loop over all connected edges (aka FIELD?)
-
     for (std::list<graph_edge>::iterator edge = nodes.at(node_index).edges.begin();
         edge != nodes.at(node_index).edges.end(); ++edge) {
         // Check if current + new distance < field's known shortest distance
@@ -468,18 +467,34 @@ void GraphList::Scan(int node_index, std::vector<int>& distances, std::vector<in
 ShortestPath GraphList::Dijkstra(int source_node) {
     ShortestPath p;
     p.source = source_node;
+
+    // First is node index, Second is distances
+    std::vector<std::pair<int, int>> pq;
+    //std::priority_queue<std::pair<int, int>, std::vector<std::pair<int,int>>, comparator> pq;
+
+    for (int i = 0; i < nodes.size(); ++i) {
+        if (i != source_node) {
+            p.distances.push_back(INT_MAX);
+            p.parents.push_back(NULL);
+        }
+        else {
+            p.distances.at(source_node) = 0;
+            p.parents.push_back(source_node);
+        }
+
+        std::pair<int, int> my_pair(i, p.distances.at(i));
+        pq.push_back(my_pair);
+    }
+
     p.distances = std::vector<int>(nodes.size(), INT_MAX);
     p.parents = std::vector<int>(nodes.size(), NULL);
+ 
 
-    p.distances.at(source_node) = 0;
-    
 
-    std::priority_queue<int, std::vector<int>, comparator> min_heap;
-    min_heap.push(source_node);
-
-    while (!min_heap.empty()) {
-        int u = min_heap.top();
-        min_heap.pop();
+    /*
+    while (!pq.empty()) {
+        int u = pq.top().first;
+        pq.pop();
 
         for (std::list<graph_edge>::iterator edge = nodes.at(u).edges.begin();
             edge != nodes.at(u).edges.end(); ++edge) {
@@ -492,9 +507,46 @@ ShortestPath GraphList::Dijkstra(int source_node) {
             }
         }
     }
+    */
 
     return p;
 }
 
 // DAGs - Scan in Topological Order
 //      - Longest path in DAGS, change all edges to negative and find shortest path
+// TODO: Single Source Shortest Path (w/ negative weight edges
+//       * Bellman-Ford variant using priority queue by Tarjan
+//          - O(n * e)
+//              1) Push a node to the queue only when 
+
+// 0(e log n) - Only positive weight edges
+//ShortestPath GraphList::Tarjan(int source_node) {
+//    ShortestPath p;
+//    p.source = source_node;
+//    p.distances = std::vector<int>(nodes.size(), INT_MAX);
+//    p.parents = std::vector<int>(nodes.size(), NULL);
+//
+//    p.distances.at(source_node) = 0;
+//
+//
+//    std::priority_queue<int, std::vector<int>, comparator> min_heap;
+//    min_heap.push(source_node);
+//
+//    while (!min_heap.empty()) {
+//        int u = min_heap.top();
+//        min_heap.pop();
+//
+//        for (std::list<graph_edge>::iterator edge = nodes.at(u).edges.begin();
+//            edge != nodes.at(u).edges.end(); ++edge) {
+//            // Check if current + new distance < field's known shortest distance
+//            if (p.distances.at(u) + edge->weight < p.distances.at(edge->index_to)) {
+//                // set if shorter
+//                p.distances.at(edge->index_to) = p.distances.at(u) + edge->weight;
+//                // set new parent
+//                p.parents.at(edge->index_to) = u;
+//            }
+//        }
+//    }
+//
+//    return p;
+//}

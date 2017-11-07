@@ -4,19 +4,12 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
+
 // Used to return Parent Tree & Distances
 struct ShortestPath {
     int source;
     std::vector<int> distances;
     std::vector<int> parents;
-
-};
-// For std::priority_queue to make a min_heap
-// std::priority_queue<int, std::vector<int>, comparator> min_heap;
-struct comparator {
-    bool operator()(const int i, const int j) {
-        return i > j;
-    }
 };
 
 
@@ -24,9 +17,16 @@ struct graph_edge {
     char dest_name;     // Just for readability
     int index_from;     // NOTE: This is only used for Kruskal to do Find()
     int index_to;
-    int weight = 0;
-
+    int weight = 0;    
 };
+// For std::priority_queue to make a min_heap
+// std::priority_queue<int, std::vector<int>, comparator> min_heap;
+struct comparator {
+    bool operator()(const std::pair<int, int> i, const std::pair<int, int> j) {
+        return i.second > j.second;
+    }
+};
+
 inline bool WeightComparator(const graph_edge& e1, const graph_edge& e2) {
     return e1.weight < e2.weight;
 }

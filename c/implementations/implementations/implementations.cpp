@@ -45,23 +45,25 @@ int main()
     g.AddEdge('F', 'D', 1);
     */
 
-    g.directed = true;
+    /* TODO TODO TODO TODO TODO TODO TODO TODO
+    g.directed = false;
     g.AddNode('A');
     g.AddNode('B');
     g.AddNode('C');
     g.AddNode('D');
     g.AddNode('E');
     g.AddNode('F');
-    g.AddNode('G');
 
-    g.AddEdge('A', 'B', 1);
-    g.AddEdge('B', 'C', 1);
-    g.AddEdge('C', 'A', 1);
-    g.AddEdge('C', 'E', 1);
-    g.AddEdge('E', 'D', 1);
-    g.AddEdge('D', 'G', 1);
-    g.AddEdge('G', 'F', 1);
-    g.AddEdge('F', 'D', 1);
+    g.AddEdge('A', 'B', 4);
+    g.AddEdge('A', 'C', 1);
+    g.AddEdge('A', 'D', 1);
+    g.AddEdge('B', 'C', 2);
+    g.AddEdge('B', 'F', 1);
+    g.AddEdge('C', 'F', 4);
+    g.AddEdge('C', 'D', 4);
+    g.AddEdge('C', 'E', 3);
+    g.AddEdge('D', 'E', 2);
+    g.AddEdge('F', 'E', 1);
     //g.AddEdge('B', 'F', 1);
     //g.AddEdge('B', 'E', 1);
     
@@ -74,9 +76,12 @@ int main()
     g.PrintGraph();
 
     g.StronglyConnectedComponents();
+
+    ShortestPath s = g.Dijkstra(0);
         
 
     printf("Hold...");
+    */
 
 
 
@@ -118,26 +123,41 @@ int main()
     // Automatic Allocation, eg. "Heap h;" deletes on scope exit
     // I assume data structures should probably allow dynamic allocation.
 
-    // TODO: Test Heap
-
     std::vector<int> list;
     for (int i = 5; i < 8 + 5; ++i) {
         // push 5-12 (13-1)
         list.push_back(i);
     }
+
+    Heap h(true);
+    h.Insert(1);
+    h.Insert(3);
+    h.Insert(2);
+    h.Insert(5);
+    h.Insert(7);
+    h.Insert(4);
+    h.Insert(9);
+    h.Insert(6);
+
+    h.Extract();
+
     //BuildMaxHeap(list);
     printf("\n");
 
-    Heap *h = new Heap();
+    //Heap *h = new Heap();
     // But this has no default constructor...must have initialSize
     // TODO: How do I auto-alloc with a non-default constructor?
 
-    printf("Size: %d\n", h->GetSize());
-    printf(h->IsEmpty() ? "Empty: true\n" : "Empty: false\n");
-    printf("Root/Max: %d", h->GetMax());
+    Heap min_heap(true);
+    Heap max_heap(false);
 
 
-    delete h;
+    //printf("Size: %d\n", h->GetSize());
+    //printf(h->IsEmpty() ? "Empty: true\n" : "Empty: false\n");
+    //printf("Root/Max: %d", h->GetMax());
+
+
+
     //delete list;
 #pragma endregion
 
