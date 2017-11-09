@@ -123,42 +123,34 @@ int main()
     // Automatic Allocation, eg. "Heap h;" deletes on scope exit
     // I assume data structures should probably allow dynamic allocation.
 
-    std::vector<int> list;
-    for (int i = 5; i < 8 + 5; ++i) {
-        // push 5-12 (13-1)
-        list.push_back(i);
+    // NOTE: Seed the RNG, % to exclusive upper bound, % x + n to set lower bound.
+    rand();
+    std::vector<int> sample_vals;
+    std::vector<int> sample_priorities;
+    for (int i = 0; i < 10; ++i) {
+        sample_vals.push_back(rand() % 100);
+        sample_priorities.push_back(rand() % 100);
     }
 
-    Heap h(true);
-    h.Insert(1);
-    h.Insert(3);
-    h.Insert(2);
-    h.Insert(5);
-    h.Insert(7);
-    h.Insert(4);
-    h.Insert(9);
-    h.Insert(6);
+    //Heap h_min(true, &sample_vals);
+    Heap h_max(false, &sample_vals, &sample_priorities);
 
-    h.Extract();
+    h_max.Insert(500);
+    h_max.Insert(900, 999);
 
-    //BuildMaxHeap(list);
+    printf("Extract Top: %i\n", h_max.Extract());
+    printf("Top: %i\n", h_max.GetTop());
+
+    h_max.Remove(6);
+
     printf("\n");
-
-    //Heap *h = new Heap();
-    // But this has no default constructor...must have initialSize
-    // TODO: How do I auto-alloc with a non-default constructor?
-
-    Heap min_heap(true);
-    Heap max_heap(false);
-
+    
 
     //printf("Size: %d\n", h->GetSize());
     //printf(h->IsEmpty() ? "Empty: true\n" : "Empty: false\n");
     //printf("Root/Max: %d", h->GetMax());
-
-
-
-    //delete list;
+    
+    
 #pragma endregion
 
 #pragma region Binary Search Tree Tests

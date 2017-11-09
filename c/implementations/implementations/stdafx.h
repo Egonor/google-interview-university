@@ -13,7 +13,11 @@
 
 // Reference additional headers your program requires here
 #include <stdexcept>
-//#include <ctime>    
+#include <time.h>       // time for srand
+//#include <stdlib.h>   // srand?
+// NOTE: rand() to seed the RNG
+//       % to exclusive upper bound, % x + n to set lower bound.
+//       Ex: int rand_one_to_one_hundred = rand() % 100 + 1;  
 #include <string>
 #include <vector>		// for hashing without rewriting Vector() to have generic types
 //#include <functional> // this is "hash": for testing purposes
