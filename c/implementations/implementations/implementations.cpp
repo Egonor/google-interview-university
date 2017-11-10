@@ -6,7 +6,6 @@
 #include "GenericVector.h"
 #include "BinaryTree.h"
 #include "bst.h"
-#include "Heap.h"
 #include "sorting.h"
 #include "printers.h"
 #include "graph.h"
@@ -45,7 +44,7 @@ int main()
     g.AddEdge('F', 'D', 1);
     */
 
-    /* TODO TODO TODO TODO TODO TODO TODO TODO
+    // TODO TODO TODO TODO TODO TODO TODO TODO
     g.directed = false;
     g.AddNode('A');
     g.AddNode('B');
@@ -77,11 +76,12 @@ int main()
 
     g.StronglyConnectedComponents();
 
+    // Tested - Works correctly!
     ShortestPath s = g.Dijkstra(0);
         
 
     printf("Hold...");
-    */
+    
 
 
 
@@ -118,11 +118,7 @@ int main()
 #pragma endregion
 
 #pragma region Heap Tests
-    // https://stackoverflow.com/questions/22146094/why-should-i-use-a-pointer-rather-than-the-object-itself
-    // this is Dynamic Allocation (must delete manually)
-    // Automatic Allocation, eg. "Heap h;" deletes on scope exit
-    // I assume data structures should probably allow dynamic allocation.
-
+    /*
     // NOTE: Seed the RNG, % to exclusive upper bound, % x + n to set lower bound.
     rand();
     std::vector<int> sample_vals;
@@ -150,6 +146,7 @@ int main()
     //printf(h->IsEmpty() ? "Empty: true\n" : "Empty: false\n");
     //printf("Root/Max: %d", h->GetMax());
     
+    */
     
 #pragma endregion
 

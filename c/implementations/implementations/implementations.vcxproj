@@ -160,6 +160,7 @@
     <ClCompile Include="bst.cpp" />
     <ClCompile Include="dictionary.cpp" />
     <ClCompile Include="graph.cpp" />
+    <ClCompile Include="Heap.cpp" />
     <ClCompile Include="implementations.cpp" />
     <ClCompile Include="linkedlist.cpp" />
     <ClCompile Include="queue.cpp" />

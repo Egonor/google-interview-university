@@ -209,7 +209,17 @@ std::vector<char> GraphList::TopologicalSort() {
 }
 
 std::vector<graph_edge> GraphList::MinimumSpanningTree() {
-    // Kruskal
+    // Kruskal:
+    //
+    // To find the minimum spanning tree...
+    // 1) Sort all edges by their weights ascending (min -> max)
+    //      * Each node is granted it's own SET implicitly.
+    // 2) Loop over all edges min->max, if an edge has not been seen
+    //      before: Find(setA) == Find(setB), add to min spanning tree.
+    // 3) Union(setA, setB) to create a new set with the joined sets (of seen nodes)
+    //      * This prevents cycles because if the two nodes on an edge are in same set
+    //          we've already connected them together.
+
     std::vector<graph_edge> sorted_edges;
     
     // In an undirected graph this adds duplicate edges to the list: A->B & B->A
@@ -463,52 +473,60 @@ void GraphList::Scan(int node_index, std::vector<int>& distances, std::vector<in
 
 }
 
+// "Single-source shortest-path"
 // 0(e log n) - Only positive weight edges
+//  * Fastest implementation uses a Fibonnaci Heap (not used here).
+// Find the shortest path to every other node from a single source node.
 ShortestPath GraphList::Dijkstra(int source_node) {
+    // https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Algorithm
+
+    // Outputs
     ShortestPath p;
     p.source = source_node;
+    std::vector<int> distances;
+    std::vector<int> parents;
 
-    // First is node index, Second is distances
-    std::vector<std::pair<int, int>> pq;
-    //std::priority_queue<std::pair<int, int>, std::vector<std::pair<int,int>>, comparator> pq;
+    // Helper variables
+    std::vector<bool> visited;
+    Heap h(true); // true == min_heap
 
+
+    // Use loop to setup default values in O(n) rather than O(n)*3 from...
+    // vector<T>(nodes.size(), INT_MAX);
     for (int i = 0; i < nodes.size(); ++i) {
-        if (i != source_node) {
-            p.distances.push_back(INT_MAX);
-            p.parents.push_back(NULL);
-        }
-        else {
-            p.distances.at(source_node) = 0;
-            p.parents.push_back(source_node);
-        }
-
-        std::pair<int, int> my_pair(i, p.distances.at(i));
-        pq.push_back(my_pair);
+        distances.push_back(INT_MAX);
+        parents.push_back(NULL);
+        visited.push_back(false);
     }
 
-    p.distances = std::vector<int>(nodes.size(), INT_MAX);
-    p.parents = std::vector<int>(nodes.size(), NULL);
- 
-
-
-    /*
-    while (!pq.empty()) {
-        int u = pq.top().first;
-        pq.pop();
-
-        for (std::list<graph_edge>::iterator edge = nodes.at(u).edges.begin();
-            edge != nodes.at(u).edges.end(); ++edge) {
-            // Check if current + new distance < field's known shortest distance
-            if (p.distances.at(u) + edge->weight < p.distances.at(edge->index_to)) {
-                // set if shorter
-                p.distances.at(edge->index_to) = p.distances.at(u) + edge->weight;
-                // set new parent
-                p.parents.at(edge->index_to) = u;
+    distances.at(source_node) = 0;
+    h.Insert(source_node, 0);
+    
+    while (h.GetSize() != 0) {
+        int min_index = h.Extract();
+        for (std::list<graph_edge>::iterator edge = nodes.at(min_index).edges.begin();
+            edge != nodes.at(min_index).edges.end(); ++edge) {
+            
+            int cur_dist = distances.at(min_index) + edge->weight;
+            if (cur_dist < distances.at(edge->index_to)) {
+                distances.at(edge->index_to) = cur_dist;
+                parents.at(edge->index_to) = min_index;
             }
-        }
-    }
-    */
 
+            if (visited.at(edge->index_to) == false)
+                h.Insert(edge->index_to, edge->weight);
+        }
+        visited.at(min_index) = true;
+
+        // NOTE: If using a destination node you can stop here if that node
+        //       has been visited (all its edges have been examined)
+        //if (visited.at(dest_node) != false) {
+        //    break;
+        //}
+    }
+
+    p.distances = distances;
+    p.parents = parents;
     return p;
 }
 

@@ -1,4 +1,5 @@
 #include "stdafx.h"
+#include "Heap.h"
 #pragma once
 
 #ifndef GRAPH_H
