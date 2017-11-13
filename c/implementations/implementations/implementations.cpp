@@ -12,37 +12,11 @@
 
 int main()
 {
+
+
 #pragma region Graph Tests
+    /* 
     GraphList g;
-
-    /* Miniumum Spanning Tree Graph
-    g.directed = false;
-    g.AddNode('A');
-    g.AddNode('B');
-    g.AddNode('C');
-    g.AddNode('D');
-    g.AddNode('E');
-    g.AddNode('F');
-    g.AddNode('G');
-
-    g.AddEdge('A', 'B', 1);
-    g.AddEdge('A', 'D', 2);
-    g.AddEdge('A', 'F', 2);
-    
-    g.AddEdge('B', 'D', 2);
-    g.AddEdge('B', 'C', 1);
-
-    g.AddEdge('C', 'D', 1);
-    g.AddEdge('C', 'E', 3);
-    
-    g.AddEdge('E', 'D', 2);
-    g.AddEdge('E', 'G', 1);
-    
-    g.AddEdge('G', 'D', 3);
-    g.AddEdge('G', 'F', 3);
-
-    g.AddEdge('F', 'D', 1);
-    */
 
     g.directed = true;
     g.AddNode('A');
@@ -74,14 +48,9 @@ int main()
     g.BFS(0); // Starts at node A (Should be an indegree 0 node in Undirected).
     std::vector<graph_node*> r_dfs = g.DFS(0);
     g.StronglyConnectedComponents();
-
-        
-
-    printf("Hold...");
     
-
-
-
+    printf("Hold...");
+    */
 #pragma endregion
 
 #pragma region Sorting Tests
@@ -110,8 +79,8 @@ int main()
     printf("\nSorted(arr): ");
     print(arr, 14);
 
-    // TODO: Radix Sort?
     */
+    // TODO: Radix Sort?
 #pragma endregion
 
 #pragma region Heap Tests
@@ -221,7 +190,7 @@ int main()
 
 
     BST MCS;
-    //TODO: Debug this bullshit
+    //TODO: Debug this?
     MCS_Insert(MCS.root, 5);
     MCS_Insert(MCS.root, 2);
     MCS_Insert(MCS.root, 4);

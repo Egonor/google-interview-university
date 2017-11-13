@@ -507,7 +507,7 @@ ShortestPath GraphList::Dijkstra(int source_node) {
 
 // DAGs - Scan in Topological Order
 //      - Longest path in DAGS, change all edges to negative and find shortest path
-// TODO: Single Source Shortest Path (w/ negative weight edges
+// TODO: Single Source Shortest Path (w/ negative weight edges)
 //       * Bellman-Ford variant using priority queue by Tarjan
 //          - O(n * e)
 //              1) Push a node to the queue only when 
