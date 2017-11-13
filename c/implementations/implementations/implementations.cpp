@@ -44,40 +44,37 @@ int main()
     g.AddEdge('F', 'D', 1);
     */
 
-    // TODO TODO TODO TODO TODO TODO TODO TODO
-    g.directed = false;
+    g.directed = true;
     g.AddNode('A');
     g.AddNode('B');
     g.AddNode('C');
     g.AddNode('D');
     g.AddNode('E');
     g.AddNode('F');
+    g.AddNode('G');
 
     g.AddEdge('A', 'B', 4);
     g.AddEdge('A', 'C', 1);
-    g.AddEdge('A', 'D', 1);
     g.AddEdge('B', 'C', 2);
-    g.AddEdge('B', 'F', 1);
-    g.AddEdge('C', 'F', 4);
-    g.AddEdge('C', 'D', 4);
-    g.AddEdge('C', 'E', 3);
-    g.AddEdge('D', 'E', 2);
+
+    g.AddEdge('D', 'F', 4);
+    g.AddEdge('E', 'D', 3);
+    g.AddEdge('D', 'G', 2);
     g.AddEdge('F', 'E', 1);
-    //g.AddEdge('B', 'F', 1);
-    //g.AddEdge('B', 'E', 1);
-    
 
-    //g.TopologicalSort();
-    std::vector<graph_edge> v_minspantree = g.MinimumSpanningTree();
-
-    g.BFS(0); // Starts at node A (Should be an indegree 0 node in Undirected).
-    std::vector<graph_node*> v_dfs = g.DFS(0);
+    DEBUG_PRINT(("***Graph Tests***\n(Node): ->(Edge)\n"));
     g.PrintGraph();
 
+    // Not Printing
+    std::vector<char> r_toposort = g.TopologicalSort();
+    std::vector<graph_edge> r_minspantree = g.MinimumSpanningTree();
+    ShortestPath r_shortestpath = g.Dijkstra(0);    // Tested - Works correctly!
+
+    // Printing
+    g.BFS(0); // Starts at node A (Should be an indegree 0 node in Undirected).
+    std::vector<graph_node*> r_dfs = g.DFS(0);
     g.StronglyConnectedComponents();
 
-    // Tested - Works correctly!
-    ShortestPath s = g.Dijkstra(0);
         
 
     printf("Hold...");

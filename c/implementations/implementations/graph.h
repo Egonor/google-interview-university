@@ -36,8 +36,7 @@ struct graph_node {
     int index;          //
     char name;          // Additional data for actual operations.
     //std::string name;
-    
-    int indegree = 0;    
+      
     int dfs_started = -1;
     int dfs_finished = -1;
 

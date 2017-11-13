@@ -12,9 +12,6 @@
 // TODO: DFS with adjacency matrix(iterative with stack)
 // TODO: BFS with adjacency matrix
 
-// TODO: DFS - based algorithms(see Aduni videos above) :
-            // check for bipartite graph
-
 
 bool GraphList::validate(int node) {
     if (node > 0 || node < nodes.size())
@@ -29,22 +26,16 @@ bool GraphList::validate(int node) {
 // 0(n + e)
 void GraphList::PrintGraph() {
 #if _DEBUG
-    for (int i = 0; i < nodes.size(); ++i) {        
-        if (nodes.at(i).dfs_started != -1 && nodes.at(i).dfs_finished != -1) {
-            printf("%i/%i ", nodes.at(i).dfs_started, nodes.at(i).dfs_finished);
-        }
-
+    for (int i = 0; i < nodes.size(); ++i) {
         printf("%c: ", nodes.at(i).name);        
         for (std::list<graph_edge>::iterator edge_index = nodes.at(i).edges.begin();
              edge_index != nodes.at(i).edges.end(); ++edge_index) {           
             //printf("->%c ", edge_index->dest_name);
             printf("->%c ", edge_index->dest_name);
         }
-
         printf("\n");
     }
 #endif
-
 }
 
 // 0(1)
@@ -69,7 +60,7 @@ int GraphList::GetIndex(char node_name) {
 // Graph setup
 void GraphList::AddNode(char node_name) {
     graph_node g;
-    g.index = nodes.size();
+    g.index = (int)nodes.size();
     g.name = node_name;
     // TODO: Overload to allow simultaneous Edge input 
     //       e.g. AddNode('A', 'B', <weight>);
@@ -117,12 +108,7 @@ void GraphList::AddEdge(char node_from, char node_to, int weight) {
         new_edge.dest_name = nodes.at(index_to).name;
         new_edge.weight = weight;
         nodes.at(index_from).edges.push_back(new_edge);
-
-        // NOTE: We can automatically calculate indegrees here when adding an edge.
-        //       We'd have to remove/edit the calculation in TopoSort (as it assumes 0)
-        //       but it puts the load on graph creation instead of the algorithm.
-        // nodes.at(edge_to).indegree += 1;
-        
+                
         // In an undirected graph we need to store each edge twice.
         // NOTE: To save space, can use:::::: if (i < j) access as [j, i]
         if (directed != true) {
@@ -132,80 +118,71 @@ void GraphList::AddEdge(char node_from, char node_to, int weight) {
             back_edge.dest_name = nodes.at(index_from).name;
             back_edge.weight = weight;
             nodes.at(index_to).edges.push_back(back_edge);
-            // nodes.at(node_index).indegree += 1;
         }
 
     }
 }
 
+// 11/12/17 - Rewritten to remove storing Indegree in graph_node struct.
 std::vector<char> GraphList::TopologicalSort() {
-    // ************************************************************************** 
-    // 1) Collect indegrees of graph by looping over every edge and increasing
+    // *************************************************************************
+    // 1) Calculate indegrees of graph by looping over every edge increasing
     //      indegree on its target node by one.
     // 2) Loop over indegrees to add zero-indegrees to a queue
     // 3) Loop over queue to remove nodes in Topo-order
     // 3b) As they're removed, scan the node's edges to decrease indegrees
     // 3c) If the decreased indegree is now zero, add to the queue 
-    // **************************************************************************
-    printf("Topological Sort: ");
-    // Output list for usage
-    std::vector<char> sorted;
+    // *************************************************************************
 
-    // Calculate indegrees of Graph: 0(n + e)
-    for (int node_index = 0; node_index < nodes.size(); ++node_index) {
-        for (std::list<graph_edge>::iterator edge_index = nodes.at(node_index).edges.begin();
-            edge_index != nodes.at(node_index).edges.end();
-            ++edge_index) {
-            // If an edge connection exists in the edge list, that means
-            // we increase the indegree of the pointed to node.
-            nodes.at(edge_index->index_to).indegree += 1;
-            //nodes.at(*edge_index).indegree += 1;
+    DEBUG_PRINT(("\nTopological Sort: "));
+    // Result should be int for usage, just char for easy debugging.
+    std::vector<char> result;
+
+    // 1) Calculate indegrees of Graph: 0(n + e)
+    std::vector<int> indegrees(nodes.size(), 0);
+    for (int v = 0; v < nodes.size(); ++v) {
+        for (std::list<graph_edge>::iterator e = nodes.at(v).edges.begin();
+            e != nodes.at(v).edges.end();
+            ++e) {
+            indegrees.at(e->index_to)++;
         }
     }
 
-    std::queue<graph_node> zero_indegrees;
-    // Push initial indegree(0) nodes onto the queue
-    for (int n = 0; n < nodes.size(); ++n) {
-        if (nodes.at(n).indegree == 0)
-            zero_indegrees.push(nodes.at(n));
+    std::queue<int> zero_indegrees;
+    // 2) Add and initial zero indegrees
+    for (int index = 0; index < indegrees.size(); ++index) {
+        if (indegrees.at(index) == 0)
+            zero_indegrees.push(index);
     }
-
-    if (zero_indegrees.empty()) {
-        printf("ERROR: There is a cycle in the graph.\n");
-    }
-
-    // Handle Queue: 0(n + e)
+    // Handle graph that ONLY has cycles.
+    if (zero_indegrees.empty())
+        DEBUG_PRINT(("ERROR: Graph contains a cycle! (No zero-indegree nodes)"));
+    // 3) Loop over indegree nodes
     while (!zero_indegrees.empty()) {
-        // Loop over the edges in a known indegree(0) node.
-        graph_node front = zero_indegrees.front();
+        int front_index = zero_indegrees.front();
 
-        for (std::list<graph_edge>::iterator edge_index = front.edges.begin();
-            edge_index != front.edges.end();
-            ++edge_index) {
-            // For each indegree(0) node subtract an indegree because...
-            // we're essentially deleting the front of the queue and the nodes
-            // it points to will then have one less indegree
-            nodes.at(edge_index->index_to).indegree -= 1;
-
-            // If the nodes updated indegree is now 0, we want to add it to the
-            // queue so we can progress further through the graph.
-            if (nodes.at(edge_index->index_to).indegree == 0) {
-                zero_indegrees.push(nodes.at(edge_index->index_to));
-            }
+        // 3b) Decrease indegrees for edges from "handled" node.
+        for (std::list<graph_edge>::iterator e = nodes.at(front_index).edges.begin();
+            e != nodes.at(front_index).edges.end(); ++e) {
+            indegrees.at(e->index_to)--;
+            // 3c) Add any new zero-indegrees to queue
+            if (indegrees.at(e->index_to) == 0)
+                zero_indegrees.push(e->index_to);
         }
-        printf("%c ", front.name);
-        //DEBUG_PRINT(("%c", front.name));
-
-        // Control how Sorted nodes are provided here...
-        // We only need to print them so nothing complicated
-        sorted.push_back(front.name);
+        // Add finished node to Topologically Sorted 'result'.
+        result.push_back(nodes.at(front_index).name);
         zero_indegrees.pop();
+        DEBUG_PRINT(("%c", nodes.at(front_index).name));
     }
 
-    printf("\n");
-    return sorted;
-    // Return type as int for indicies?
-    // or graph_node* to provide a sorted list of graph_nodes? (exposes nodes)
+    // Handle edge case where there is a cycle (no zero-indegree nodes) in...
+    // a separate (later) set within the graph.  
+    if (result.size() != nodes.size()) {
+        DEBUG_PRINT(("   ERROR: Graph contains cycle in later set."));
+    }
+
+    DEBUG_PRINT(("\n"));
+    return result;
 }
 
 std::vector<graph_edge> GraphList::MinimumSpanningTree() {
@@ -234,7 +211,7 @@ std::vector<graph_edge> GraphList::MinimumSpanningTree() {
     std::sort(sorted_edges.begin(), sorted_edges.end(), WeightComparator);
     
     // Setup parent array 0(n)
-    UnionFind parent_array(nodes.size());
+    UnionFind parent_array((int)nodes.size());
 
 //  Union-Find is only to check for cycles. Weighted/PathComping the UnionFind
 //      makes it unable to store a spanning tree (eg. actual parent references)
@@ -242,22 +219,33 @@ std::vector<graph_edge> GraphList::MinimumSpanningTree() {
 //      Each graph_edge needs to hold its FROM value which makes this algorithm
 //      seem more suited for an adjacency matrix, but we still want it in 0(e)
     std::vector<graph_edge> spanning_tree;
+
+    // Check for Bipartite Graph - 
+    // a bipartite graph (or bigraph) is a graph whose vertices can be divided into
+    // two disjoint and independent sets {U} and {V} such that every edge connects
+    // a vertex in {U} to one in {V}.
+    // TODO: Separate this into a different function?
+    int numSets = (int)nodes.size();
+
     // Loop over sorted edges and Union edges not in the same set.
     for (int i = 0; i < sorted_edges.size(); ++i) {
         if (parent_array.Find(sorted_edges.at(i).index_from) != 
             parent_array.Find(sorted_edges.at(i).index_to)) {
-
-            parent_array.Union(sorted_edges.at(i).index_from, 
-                                sorted_edges.at(i).index_to);
-            spanning_tree.push_back(sorted_edges.at(i));
+                parent_array.Union(sorted_edges.at(i).index_from, sorted_edges.at(i).index_to);
+                numSets--;
+                spanning_tree.push_back(sorted_edges.at(i));
         }
     }
-
+    if (numSets == 2)
+        DEBUG_PRINT(("Graph is Bipartite!\n"));
+    
+    // TODO: DEBUG_PRINT the MinSpanTree?
     return spanning_tree;
 }
 
+// NOTE: Misses unconnected SETs (in bipartite graph) (intentional)
 void GraphList::BFS(int start_node_index) {
-    printf("BFS: ");
+    DEBUG_PRINT(("\nBFS: "));
     // Array of size(n) that has 0's if nodes hasn't been seen yet.
     std::vector<bool> seen;
     for (int i = 0; i < nodes.size(); ++i) {
@@ -266,7 +254,7 @@ void GraphList::BFS(int start_node_index) {
 
     std::queue<int> node_queue;
     if (start_node_index < 0 || start_node_index >= nodes.size()) {
-        printf("Error: Tried to start BFS at node not in graph.");
+        DEBUG_PRINT(("Error: Tried to start BFS at node not in graph."));
         return;
     }
     node_queue.push(start_node_index);
@@ -281,10 +269,10 @@ void GraphList::BFS(int start_node_index) {
                 seen.at(edge->index_to) = true;
             }
         }
-        printf("%c ", nodes.at(node_index).name);
+        DEBUG_PRINT(("%c ", nodes.at(node_index).name));
         node_queue.pop();
     }
-    printf("\n");
+    DEBUG_PRINT(("\n\n"));
 }
 
 void GraphList::DFSr(int n, std::vector<bool>& seen, std::vector<graph_node*> *tree,
@@ -326,7 +314,7 @@ void GraphList::DFSr(int n, std::vector<bool>& seen, std::vector<graph_node*> *t
 std::vector<graph_node*> GraphList::DFS(int start_node) {
     validate(start_node);
 
-    DEBUG_PRINT(("__DFS__\n"));
+    DEBUG_PRINT(("DFS:\n"));
 
     std::vector<bool> seen(nodes.size(), false);
     std::vector<graph_node*> dfs_tree;
@@ -355,6 +343,7 @@ std::vector<graph_node*> GraphList::DFS(int start_node) {
 
     }
 
+    DEBUG_PRINT(("\n"));
     return dfs_tree;
 }
 
@@ -362,7 +351,7 @@ std::vector<graph_node*> GraphList::DFS(int start_node) {
 std::vector<graph_node*> GraphList::DFS(int start_node, std::vector<graph_node*> *dfs_order) {
     // Resort to default method if input == NULL
     if (dfs_order == NULL) {
-        DEBUG_PRINT(("ERROR: No custom DFS order provided, DFSing normally.\n"));
+        DEBUG_PRINT(("DFS:   ERROR: No custom DFS order provided, DFSing normally.\n"));
         return DFS(start_node);
     }
     else {
@@ -384,7 +373,8 @@ std::vector<graph_node*> GraphList::DFS(int start_node, std::vector<graph_node*>
         }
 
         return dfs_tree;
-    }    
+    }
+    DEBUG_PRINT(("\n"));
 }
 
 // Strongly connected components (only in DIRECTED graphs)
@@ -404,7 +394,6 @@ GraphList GraphList::MakeReverseGraph() {
     for (int i = 0; i < nodes.size(); ++i) {
         reversed_nodes.at(i).name = nodes.at(i).name;
         reversed_nodes.at(i).index = nodes.at(i).index;
-        reversed_nodes.at(i).indegree = nodes.at(i).indegree; // No longer true
         reversed_nodes.at(i).dfs_started = nodes.at(i).dfs_started; // backward?
         reversed_nodes.at(i).dfs_finished = nodes.at(i).dfs_finished;
         
@@ -444,7 +433,7 @@ void GraphList::StronglyConnectedComponents() {
     //  0(e) 2) Reverse the edges in the graph
     GraphList r = MakeReverseGraph();
         
-    DEBUG_PRINT(("\n__Strongly Connected Components__\n"));
+    DEBUG_PRINT(("Strongly Connected Components:\n"));
     
     //  0(e) 3) Call DFS on the nodes in the reverse graph, in reverse order 
     //          of the finishing times.
@@ -457,21 +446,6 @@ void GraphList::StronglyConnectedComponents() {
     //  as arguments and returning a reversed graph.
 }
 
-
-void GraphList::Scan(int node_index, std::vector<int>& distances, std::vector<int>& parents) {
-    // Loop over all connected edges (aka FIELD?)
-    for (std::list<graph_edge>::iterator edge = nodes.at(node_index).edges.begin();
-        edge != nodes.at(node_index).edges.end(); ++edge) {
-        // Check if current + new distance < field's known shortest distance
-        if (distances.at(node_index) + edge->weight < distances.at(edge->index_to)) {
-            // set if shorter
-            distances.at(edge->index_to) = distances.at(node_index) + edge->weight;
-            // set new parent
-            parents.at(edge->index_to) = node_index;
-        }
-    }
-
-}
 
 // "Single-source shortest-path"
 // 0(e log n) - Only positive weight edges
@@ -525,6 +499,7 @@ ShortestPath GraphList::Dijkstra(int source_node) {
         //}
     }
 
+    // TODO: DEBUG_PRINT outputs?
     p.distances = distances;
     p.parents = parents;
     return p;
