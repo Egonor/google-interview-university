@@ -6,13 +6,86 @@
 #include "GenericVector.h"
 #include "BinaryTree.h"
 #include "bst.h"
-#include "Heap.h"
 #include "sorting.h"
 #include "printers.h"
+#include "graph.h"
 
 int main()
 {
+#pragma region Graph Tests
+    GraphList g;
+
+    /* Miniumum Spanning Tree Graph
+    g.directed = false;
+    g.AddNode('A');
+    g.AddNode('B');
+    g.AddNode('C');
+    g.AddNode('D');
+    g.AddNode('E');
+    g.AddNode('F');
+    g.AddNode('G');
+
+    g.AddEdge('A', 'B', 1);
+    g.AddEdge('A', 'D', 2);
+    g.AddEdge('A', 'F', 2);
+    
+    g.AddEdge('B', 'D', 2);
+    g.AddEdge('B', 'C', 1);
+
+    g.AddEdge('C', 'D', 1);
+    g.AddEdge('C', 'E', 3);
+    
+    g.AddEdge('E', 'D', 2);
+    g.AddEdge('E', 'G', 1);
+    
+    g.AddEdge('G', 'D', 3);
+    g.AddEdge('G', 'F', 3);
+
+    g.AddEdge('F', 'D', 1);
+    */
+
+    g.directed = true;
+    g.AddNode('A');
+    g.AddNode('B');
+    g.AddNode('C');
+    g.AddNode('D');
+    g.AddNode('E');
+    g.AddNode('F');
+    g.AddNode('G');
+
+    g.AddEdge('A', 'B', 4);
+    g.AddEdge('A', 'C', 1);
+    g.AddEdge('B', 'C', 2);
+
+    g.AddEdge('D', 'F', 4);
+    g.AddEdge('E', 'D', 3);
+    g.AddEdge('D', 'G', 2);
+    g.AddEdge('F', 'E', 1);
+
+    DEBUG_PRINT(("***Graph Tests***\n(Node): ->(Edge)\n"));
+    g.PrintGraph();
+
+    // Not Printing
+    std::vector<char> r_toposort = g.TopologicalSort();
+    std::vector<graph_edge> r_minspantree = g.MinimumSpanningTree();
+    ShortestPath r_shortestpath = g.Dijkstra(0);    // Tested - Works correctly!
+
+    // Printing
+    g.BFS(0); // Starts at node A (Should be an indegree 0 node in Undirected).
+    std::vector<graph_node*> r_dfs = g.DFS(0);
+    g.StronglyConnectedComponents();
+
+        
+
+    printf("Hold...");
+    
+
+
+
+#pragma endregion
+
 #pragma region Sorting Tests
+    /*
     // Setup Vector for tests && Print
     int arr[] = { 20, 32, 9, 15, 68, 12, 45, 90, 76, 300, 43, 2, 91, 26 };
     //vector<int> vec(arr, arr + sizeof(arr) / sizeof(arr[0]) );
@@ -38,36 +111,40 @@ int main()
     print(arr, 14);
 
     // TODO: Radix Sort?
+    */
 #pragma endregion
 
-
 #pragma region Heap Tests
-    // https://stackoverflow.com/questions/22146094/why-should-i-use-a-pointer-rather-than-the-object-itself
-    // this is Dynamic Allocation (must delete manually)
-    // Automatic Allocation, eg. "Heap h;" deletes on scope exit
-    // I assume data structures should probably allow dynamic allocation.
-
-    // TODO: Test Heap
-
-    std::vector<int> list;
-    for (int i = 5; i < 8 + 5; ++i) {
-        // push 5-12 (13-1)
-        list.push_back(i);
+    /*
+    // NOTE: Seed the RNG, % to exclusive upper bound, % x + n to set lower bound.
+    rand();
+    std::vector<int> sample_vals;
+    std::vector<int> sample_priorities;
+    for (int i = 0; i < 10; ++i) {
+        sample_vals.push_back(rand() % 100);
+        sample_priorities.push_back(rand() % 100);
     }
-    //BuildMaxHeap(list);
+
+    //Heap h_min(true, &sample_vals);
+    Heap h_max(false, &sample_vals, &sample_priorities);
+
+    h_max.Insert(500);
+    h_max.Insert(900, 999);
+
+    printf("Extract Top: %i\n", h_max.Extract());
+    printf("Top: %i\n", h_max.GetTop());
+
+    h_max.Remove(6);
+
     printf("\n");
+    
 
-    Heap *h = new Heap();
-    // But this has no default constructor...must have initialSize
-    // TODO: How do I auto-alloc with a non-default constructor?
-
-    printf("Size: %d\n", h->GetSize());
-    printf(h->IsEmpty() ? "Empty: true\n" : "Empty: false\n");
-    printf("Root/Max: %d", h->GetMax());
-
-
-    delete h;
-    //delete list;
+    //printf("Size: %d\n", h->GetSize());
+    //printf(h->IsEmpty() ? "Empty: true\n" : "Empty: false\n");
+    //printf("Root/Max: %d", h->GetMax());
+    
+    */
+    
 #pragma endregion
 
 #pragma region Binary Search Tree Tests
