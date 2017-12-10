@@ -387,7 +387,7 @@ std::vector<graph_node*> GraphList::DFS(int start_node, std::vector<graph_node*>
 //          finishing times.
 GraphList GraphList::MakeReverseGraph() {
 
-    // Note: This hulabaloo is required because I don't have a copy constructor.
+    // NOTE: This hulabaloo is required because I don't have a copy constructor.
     std::vector<graph_node> reversed_nodes(nodes.size());
         
     // Copy Nodes & Edges
