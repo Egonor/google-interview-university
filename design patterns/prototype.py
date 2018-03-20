@@ -44,11 +44,14 @@ class PrototypeBurger:
 
 class Burger:
     def __init__(self, test_list):
+        self.proto_burger = PrototypeBurger()
         self.test_list = test_list
 
     def get_new(self):
-        test_list = ['new', 'copy']
         return self.__class__(test_list)
+
+
+
 
 
 # Make a burger prototype and collection
