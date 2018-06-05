@@ -237,3 +237,14 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+=======
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
