@@ -198,7 +198,7 @@ void BST_Print_LevelOrder(BST* tree) {
     std::queue<BSTNode *> q;
     q.push(tree->root);
     while (!q.empty()) {
-        int current_size = q.size();
+        int current_size = (int)q.size();
         for (int i = 0; i < current_size; ++i) {
             BSTNode* curr = q.front();
             q.pop();

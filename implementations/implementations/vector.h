@@ -3,6 +3,8 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+// WARN: Untested if inserting an invalid type works. Compiler handles?
+//       i.e. vec is type Vector<int>, called vec.Insert(bool);
 
 template <typename T>                   // T = int> Default type to int: use as Vector<> myV;
 class Vector {
@@ -10,11 +12,10 @@ private:
 	u32 size;
 	u32 capacity;						// Default vector capacity == 1024
     T*  storage;	   					// Pointer to array
-
-	void Resize();						// Double size of Vector
-
+    
 public:
     Vector();// : size(0), capacity(2), storage(NULL) { storage = new T[capacity]; }
+    ~Vector();
 
 	u32 Size();							// return Size of Mutable Array
 	u32 Capacity();						// return Capacity of Mutable Array
@@ -27,10 +28,10 @@ public:
 	//void Prepend(int);				// add item at 0
 
 	T Pop();							// remove value from back of Mutable Array
-	void Delete(u32 index);				// remove value at index in Mutable Array, shift other values left
-	void Remove(T value);				// remove any indexes containing value
+	T Delete(u32 index);				// remove value at index in Mutable Array, shift other values left (returns value deleted or NULL) 
+	u32 Remove(T value);				// remove any indexes containing value (returns count removed)
 
-	u32 Find(T value);			    	// return first index of value	
+	int Find(T value);			    	// return first index of value	
 
     int BinarySearch(int value);        // Binary search the vector
     int BinarySearchR(int value, int min, int max);       // Binary search using recursion

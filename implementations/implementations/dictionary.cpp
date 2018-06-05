@@ -13,11 +13,11 @@ u32 Dictionary::Hash1(string key) {
 	return hash;
 }
 
+// TODO: Is this Hash function a placeholder?
 u32 Dictionary::Hash2(u32 hashedKey) {
 	return (31 - (hashedKey % 31) + 1); // random prime (31) + 1 (can't return 0 or infinite loop @ hash1)
 
 	// http://cseweb.ucsd.edu/~kube/cls/100/Lectures/lec16/lec16-23.html
-	// TODO: Find another uniform hashing algorith (djb2?)
 	//return (1 + ((hashedKey / max) % (max - 1)));
 }
 
@@ -30,7 +30,7 @@ vector<Pair> Dictionary::Resize(float scale) {
 	// everything else uses the new tableSize for calculation
 
 	// divided by scale so we only loop over original table's size
-	for (int i = 0; i < (u32)(tableSize / scale); ++i) {
+	for (u32 i = 0; i < (u32)(tableSize / scale); ++i) {
 		if (!table[i].key.empty() || !table[i].key.compare(deleted)) 
 		{
 			u32 toCopy = Hash1(table[i].key) % tableSize;
@@ -62,10 +62,13 @@ u32 Dictionary::Size() {
 	return size;
 }
 
+
+// Searches for a key in the dictionary.
+// With hash chaining/double hashing, this is O(n * hash())
 bool Dictionary::Exists(string key) {
 	u32 hashedKey = Hash1(key) % tableSize;
 
-	for (int i = 0; i < (tableSize - 1); ++i) {
+	for (u32 i = 0; i < (tableSize - 1); ++i) {
 		if (table[hashedKey].key.empty())
 			return false;
 		else if (table[hashedKey].key.compare(key))
@@ -73,32 +76,24 @@ bool Dictionary::Exists(string key) {
 		else
 			hashedKey = ((hashedKey + (i * Hash2(hashedKey))) % tableSize);
 	}
-	/*
-	while (!table[hashedKey].key.empty() || !table[hashedKey].key.compare(deleted))
-	{
-		if (table[hashedKey].key == key)
-			return true;
-		else
-			hashedKey = ((hashedKey + (i * Hash2(hashedKey))) % tableSize);
-	}
-	return false;
-	*/
+    return false;
 }
 
 // Return the value of a given key, if it exists.
 int Dictionary::GetValue(string key) {
 	u32 hashedKey = Hash1(key) % tableSize;	
 
-	for (int i = 0; i < (tableSize - 1); ++i) {
+	for (u32 i = 0; i < (tableSize - 1); ++i) {
 		if (table[hashedKey].key.empty()) {
 			printf("'%s' doesn't exist in Dictionary!\n", key.c_str());
-			return -1; // Key doesn't exist
+            return -1; // Key doesn't exist
 		}
 		else if (table[hashedKey].key.compare(key) == 0)
 			return table[hashedKey].value;
 		else
 			hashedKey = ((hashedKey + (i * Hash2(hashedKey))) % tableSize);
 	}
+    return -1;
 }
 
 // Add a Hashed {key, value} pair to the dictionary.
@@ -112,7 +107,7 @@ u32 Dictionary::Insert(string key, int value) {
 	//u32 hashedKey = FindSlot(key);
 	// Loop until we find a safe hash to write (Double Hashing)	
 
-	for (int i = 0; i < (tableSize - 1); ++i) {
+	for (u32 i = 0; i < (tableSize - 1); ++i) {
 		if (!table[hashedKey].key.empty() ||				// Rehash if slot isn't empty
 			table[hashedKey].key.compare(deleted) == 0)		// Rehash if slot isn't rewritable("deleted")
 															//  * compare returns 0 if strings are equal
@@ -151,7 +146,7 @@ u32 Dictionary::Delete(string key) {
 
 	u32 hashedKey = Hash1(key) % tableSize;
 
-	for (int i = 0; i < (tableSize - 1); ++i) {
+	for (u32 i = 0; i < (tableSize - 1); ++i) {
 		// This doesn't actually compare hashes, just compares strings within the hash table.
 		// Is this a given with Pair based hash tables (*non-direct addressed)?
 		if (table[hashedKey].key.empty()) {
@@ -169,4 +164,5 @@ u32 Dictionary::Delete(string key) {
 			hashedKey = ((hashedKey + (i * Hash2(hashedKey))) % tableSize);
 		}
 	}
+    return -1;
 }

@@ -24,7 +24,7 @@
 //#include <iostream>	// cout
 #include <queue>        // Level-Order Traversal of Binary Tree
 #include <list>         // Level-Order Traversal of Binary Tree
-#include <algorithm>>   // bst.ccp: max()
+#include <algorithm>    // bst.ccp: max()
 #include <iostream>     // cout <<
 
 // https://stackoverflow.com/questions/1941307/c-debug-print-macros
@@ -34,11 +34,11 @@
 # define DEBUG_PRINT(x) do {} while (0)
 #endif
 
+
 typedef int8_t i8;		// BYTE
 typedef int16_t i16;	// WORD
 typedef int32_t i32;	// DWORD
 typedef int64_t i64;	// QWORD
-
 
 typedef uint8_t u8;		// BYTE
 typedef uint16_t u16;	// WORD

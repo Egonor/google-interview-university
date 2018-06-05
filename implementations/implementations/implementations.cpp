@@ -10,6 +10,10 @@
 #include "printers.h"
 #include "graph.h"
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 int main()
 {
 
@@ -436,9 +440,9 @@ int main()
 #pragma endregion
 
 #pragma region Vector Tests
-	/*
-	Vector v;
-	
+#if 0
+    Vector<int> v;
+
 	v.Push(1);
 	v.Push(2);
 	v.Push(3);
@@ -454,60 +458,66 @@ int main()
 	v.Push(13);
 	v.Push(5);
 
+    // NOTE: Vector() implicilty converts invalid types.
+    v.Insert(3, 3.041f);
+
 	printf("Searching through...\n");
-	for (int i = 0; i < v.Size(); i++)
+	for (u32 i = 0; i < v.Size(); ++i)
 	{
 		printf("%i ", v.Access(i));
 	}
+    printf("\n");
 
 	// Should be v[4]
 	int val = v.Find(69);
-	if (val != NULL)
+	if (val > 0)
 		printf("\n5 Found at v[%i]! ", v.Find(5));
 	else
 	{
 		printf("\nVal not found");
 	}
 
-	/*
-	// Add 10 random numbers to v
-	srand(time(NULL));
-	for (int i = 0; i < 10; i++) {
-		v.Push(rand() % 3);
-	}
-
 	// Print Vector pre function
 	printf("BEFORE:\n");
-	for (int i = 0; i < v.Size(); i++)
+	for (int i = 0; i < v.Size(); ++i)
 	{
 		printf("%i ", v.Access(i));
 	}
 
 	// TEST INSERT()
-	//v.Insert(5, 9999);
+	v.Insert(5, 9999);
 
 	// TEST POP()
-	//v.Pop();
+	printf("Popped: " + v.Pop());
 
-	// TEST DELETE()
-	//v.Delete(5)
+	// TEST DELETE() from index 13, should remove 5 near the end
+    v.Delete(13);
 
-	// TEST REMOVE()
-	//v.Remove(2);
-	
-	// Print Vector post function
-	printf("\nPOST:\n");
-	for (int i = 0; i < v.Size(); i++)
-	{
-		printf("%i ", v.Access(i));
-	}	
-	*/
+    // TEST REMOVE()
+    Vector<int> remove_vec;
+    remove_vec.Push(1);
+    remove_vec.Push(3);
+    remove_vec.Push(4);
+    remove_vec.Push(16);
+    remove_vec.Push(9);
+    remove_vec.Push(3);
+    remove_vec.Push(3);
+    remove_vec.Push(3);
+    remove_vec.Push(2);
+    remove_vec.Push(1);
+    remove_vec.Push(3);
+	remove_vec.Remove(3);
 
-	/* TEST isEmpty()
-	printf(v.isEmpty() ? "true\n" : "false\n");
-	v.Push(32);
-	printf(v.isEmpty() ? "true\n" : "false\n");
-	*/
+	// TEST isEmpty()
+    Vector<int> empty_vec;
+    printf("\nTesting Vector<T>.isEmpty() - Correct: True, False\n");
+	printf(empty_vec.isEmpty() ? "true\n" : "false\n");
+	empty_vec.Push(32);
+	printf(empty_vec.isEmpty() ? "true\n" : "false\n");
+    printf("\n");
+#else
+#endif
+
 	
 #pragma endregion
 	
