@@ -180,12 +180,12 @@ T Vector<T>::Delete(u32 index) {
 //          array.  
 template<typename T>
 u32 Vector<T>::Remove(T value) {
-    u32 num_removed = 0;
-#if 1
+    u32 old_size = size;
+#if 0
+    // Uses a buffer array which requires O(2n) space.
     T* result = new T[capacity];
 
-    u32 _new = 0;
-    u32 _old = 0;
+    u32 _new = 0, _old = 0;
     while (_old < size) {
         if (storage[_old] != value) 
         {
@@ -194,42 +194,45 @@ u32 Vector<T>::Remove(T value) {
         }
         _old++;
     }
-    num_removed = _old - _new;
-    size = size - num_removed;
+    // New should only grow to the new size
+    size = _new;
 
     delete[] storage;
     storage = result;
 
-
-#else    
-    // TODO: In-place doesn't work.
-    while (i < size) {
-        if (storage[i] == value) {
+#else
+    // In-Place - No extra space complexity
+    u32 i = 0, j = 0;
+    // Move i through the array.  If value doesn't exist, i == size
+    while (i < size && j < size) {
+        if (storage[i] == value) {            
             j = i + 1;
             while (j < size) {
-                if (storage[j] != value) {
+                if (storage[j] != value) {                    
                     storage[i] = storage[j];
-                    i++, j++;
+                    storage[j] = value;
+                    break;
                 }
-                else { // storage[j] == value
-                    
+                else {
+                    j++;
                 }
-                total_removed++;
             }
         }
         else {
             i++;
-        }
-
-	}
-    size -= total_removed;
-    if (size < capacity / 3) {
-        // TODO: Shrink
-        // This is a tradeoff, we can shrink either way and get O(n) with extra space.
-        // Or we can do this double loop and sometimes get O(n+n/2) aka O(n)
+        }      
     }
-#endif
-    return num_removed;
+    size = i;
+
+#endif    
+    //if (size < capacity / 3) {
+    // TODO: Shrink
+    // This is a tradeoff, we can shrink either way and get O(n) with extra space.
+    // Or we can do this double loop and sometimes get O(n+n/2) aka O(n)
+    //}
+
+    // returns the number of items found/removed from the Vector
+    return old_size - size;
 }
 
 // Linear Search:

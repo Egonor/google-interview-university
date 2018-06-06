@@ -440,7 +440,7 @@ int main()
 #pragma endregion
 
 #pragma region Vector Tests
-#if 0
+#if 1
     Vector<int> v;
 
 	v.Push(1);
@@ -493,20 +493,33 @@ int main()
 	// TEST DELETE() from index 13, should remove 5 near the end
     v.Delete(13);
 
-    // TEST REMOVE()
+    ///////////////// TEST REMOVE() ///////////////////
     Vector<int> remove_vec;
     remove_vec.Push(1);
     remove_vec.Push(3);
-    remove_vec.Push(4);
-    remove_vec.Push(16);
-    remove_vec.Push(9);
-    remove_vec.Push(3);
-    remove_vec.Push(3);
-    remove_vec.Push(3);
-    remove_vec.Push(2);
     remove_vec.Push(1);
     remove_vec.Push(3);
-	remove_vec.Remove(3);
+    remove_vec.Push(3);
+    remove_vec.Push(3);
+    remove_vec.Push(1);
+    remove_vec.Push(1);
+    remove_vec.Push(3);
+
+    // Test Removing Nothing
+    u32 remove_none = remove_vec.Remove(9);
+
+    // Test Removing multiples
+	u32 removed = remove_vec.Remove(3);
+
+    // Test Emptying Vector
+    u32 remove_rest = remove_vec.Remove(1);
+
+
+    u32 test_removed = remove_vec.Access(3);
+
+    ///////////////////////////////////////////////////
+    
+
 
 	// TEST isEmpty()
     Vector<int> empty_vec;
