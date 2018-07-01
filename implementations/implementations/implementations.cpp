@@ -506,7 +506,7 @@ int main()
     remove_vec.Push(3);
 
     // Test Removing Nothing
-    u32 remove_none = remove_vec.Remove(9);
+    //u32 remove_none = remove_vec.Remove(9);
 
     // Test Removing multiples
 	u32 removed = remove_vec.Remove(3);
